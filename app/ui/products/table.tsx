@@ -76,13 +76,13 @@ export default async function InvoicesTable({
                   Categories
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
-                  Sub Categories
-                </th>
-                <th scope="col" className="px-3 py-5 font-medium">
                   Unit
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
                   Stock
+                </th>
+                <th scope="col" className="px-3 py-5 font-medium">
+                  Price
                 </th>
                 <th scope="col" className="relative py-3 pl-6 pr-3">
                   <span className="sr-only">Edit</span>
