@@ -16,7 +16,7 @@ export default async function InvoicesTable({
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
-        <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
+        <div className="rounded-lg bg-gray-50 p-2 md:pt-0 overflow-x-auto">
           <div className="md:hidden">
             {/* {invoices?.map((invoice) => (
               <div
@@ -57,6 +57,9 @@ export default async function InvoicesTable({
           <table className="hidden min-w-full text-gray-900 md:table">
             <thead className="rounded-lg text-left text-sm font-normal">
               <tr>
+                <th scope="col" className="px-3 py-5 font-medium">
+                  Code
+                </th>
                 <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
                   Name
                 </th>
@@ -64,13 +67,22 @@ export default async function InvoicesTable({
                   Description
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
-                  Code
-                </th>
-                <th scope="col" className="px-3 py-5 font-medium">
                   Barcode
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
+                  Image
+                </th>
+                <th scope="col" className="px-3 py-5 font-medium">
                   Categories
+                </th>
+                <th scope="col" className="px-3 py-5 font-medium">
+                  Sub Categories
+                </th>
+                <th scope="col" className="px-3 py-5 font-medium">
+                  Unit
+                </th>
+                <th scope="col" className="px-3 py-5 font-medium">
+                  Stock
                 </th>
                 <th scope="col" className="relative py-3 pl-6 pr-3">
                   <span className="sr-only">Edit</span>
