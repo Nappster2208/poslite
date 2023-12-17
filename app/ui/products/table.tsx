@@ -79,7 +79,7 @@ export default async function InvoicesTable({
                   Unit
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
-                  Stock
+                  Stock of goods
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
                   Price
