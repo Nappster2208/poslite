@@ -3,30 +3,28 @@
 import { CustomerField } from "@/app/lib/definitions";
 import Link from "next/link";
 import {
-  ArchiveBoxIcon,
   CheckIcon,
   ClockIcon,
   CurrencyDollarIcon,
-  FolderOpenIcon,
   PencilSquareIcon,
+  PlusIcon,
   QrCodeIcon,
   ScaleIcon,
-  Square2StackIcon,
   Square3Stack3DIcon,
   TagIcon,
-  UserCircleIcon,
 } from "@heroicons/react/24/outline";
 // import { Buttons, ButtonUpload } from "@/app/ui/button";
 import { Button } from "@mui/material";
 // import { createInvoice } from '@/app/lib/action';
 import { useFormState } from "react-dom";
 import Image from "next/image";
+import { AddInput } from "./add-categori";
 
 export default function Form() {
   return (
     <form>
       {/* <form action={dispatch}> */}
-      <div className="rounded-md bg-gradient-to-tl from-slate-200 to-slate-400 p-4 md:p-6">
+      <div className="rounded-md bg-slate-400 p-4 md:p-6">
         <div className="bg-white shadow-md p-2 rounded-lg">
           {/* Product Code */}
           <div className="mb-4">
@@ -155,7 +153,7 @@ export default function Form() {
                 Category
               </label>
               <div className="relative mt-2 rounded-md">
-                <div className="relative">
+                <div className="relative flex items-center">
                   <select
                     id="productCategories"
                     name="productCategories"
@@ -171,6 +169,7 @@ export default function Form() {
                     <option value="BOX">Clothes</option>
                   </select>
                   <TagIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+                  <AddInput />
                 </div>
               </div>
             </div>
