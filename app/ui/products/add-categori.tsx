@@ -6,7 +6,7 @@ type MyObject = {
   category: string;
 };
 
-export function AddInput() {
+export function AddSelect() {
   const [val, setVal] = useState<MyObject[]>([{ category: "" }]);
 
   console.log(val);
