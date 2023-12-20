@@ -18,13 +18,13 @@ import { Button } from "@mui/material";
 // import { createInvoice } from '@/app/lib/action';
 import { useFormState } from "react-dom";
 import Image from "next/image";
-import { AddInput } from "./add-categori";
+import { AddInput, AddSelect } from "./add-dynamic-input";
 
 export default function Form() {
   return (
     <form>
       {/* <form action={dispatch}> */}
-      <div className="rounded-md bg-slate-400 p-4 md:p-6">
+      <div className="rounded-md p-4 md:p-6">
         <div className="bg-white shadow-md p-2 rounded-lg">
           {/* Product Code */}
           <div className="mb-4">
@@ -153,9 +153,11 @@ export default function Form() {
                 Category
               </label>
               <div className="relative mt-2 rounded-md">
-                <AddInput />
+                <AddSelect />
               </div>
             </div>
+
+            <AddInput />
 
             {/* Product Unit */}
             <div className="mb-4 w-full">
