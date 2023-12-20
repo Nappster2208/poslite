@@ -89,7 +89,7 @@ export default function Form() {
                 <Button
                   variant="contained"
                   component="label"
-                  className="bg-gradient-to-tr from-cyan-500 to-purple-700"
+                  className="bg-gradient-to-tr from-cyan-500 to-blue-700"
                 >
                   Upload Image
                   <input type="file" accept="image/*" hidden />
@@ -171,38 +171,9 @@ export default function Form() {
                 </div>
               </div>
             </div>
-
-            {/* Product Unit */}
-            <div className="mb-4 w-full">
-              <label
-                htmlFor="productUnit"
-                className="mb-2 block text-sm font-medium"
-              >
-                Unit
-              </label>
-              <div className="relative mt-2 rounded-md">
-                <div className="relative">
-                  <select
-                    id="productUnit"
-                    name="productUnit"
-                    aria-describedby="unit-error"
-                    defaultValue=""
-                    className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                  >
-                    <option value="" disabled>
-                      Select a Unit
-                    </option>
-                    <option value="PCS">PCS</option>
-                    <option value="LSN">LSN</option>
-                    <option value="BOX">BOX</option>
-                  </select>
-                  <ScaleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
-                </div>
-              </div>
-            </div>
           </div>
 
-          <div className="flex flex-grow gap-4 flex-col md:flex-row justify-between">
+          <div className="grid">
             {/* Product Price */}
             <AddInput />
             {/* <input
@@ -214,29 +185,29 @@ export default function Form() {
                     aria-describedby="price-error"
                     className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                   /> */}
+          </div>
 
-            {/* Product Stock */}
-            <div className="mb-4 w-full">
-              <label
-                htmlFor="productStock"
-                className="mb-2 block text-sm font-medium"
-              >
-                Stock of goods
-              </label>
-              <div className="relative mt-2 rounded-md">
-                <div className="relative">
-                  <input
-                    id="productStock"
-                    name="productStock"
-                    type="number"
-                    step="0.01"
-                    placeholder="Enter Stock"
-                    aria-describedby="stock-error"
-                    defaultValue=""
-                    className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                  />
-                  <Square3Stack3DIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
-                </div>
+          {/* Product Stock */}
+          <div className="mb-4 w-full">
+            <label
+              htmlFor="productStock"
+              className="mb-2 block text-sm font-medium"
+            >
+              Stock of goods
+            </label>
+            <div className="relative mt-2 rounded-md">
+              <div className="relative">
+                <input
+                  id="productStock"
+                  name="productStock"
+                  type="number"
+                  step="0.01"
+                  placeholder="Enter Stock"
+                  aria-describedby="stock-error"
+                  defaultValue=""
+                  className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                />
+                <Square3Stack3DIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
               </div>
             </div>
           </div>
