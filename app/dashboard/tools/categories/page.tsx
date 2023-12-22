@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { lusitana } from "@/app/ui/fonts";
 import Search from "@/app/ui/search";
+import { CreateCategory } from "@/app/ui/tools/categories/buttons";
 
 export const metadata: Metadata = {
   title: "Categories",
@@ -20,7 +21,7 @@ export default function Page({
       </div>
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
         <Search placeholder="Search products..." />
-        {/* <CreateProduct /> */}
+        <CreateCategory />
       </div>
       {/* <Table query={query} currentPage={currentPage} /> */}
       <div className="mt-5 flex w-full justify-center">
