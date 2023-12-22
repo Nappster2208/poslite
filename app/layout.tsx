@@ -4,7 +4,7 @@ import { inter, nuntio } from "./ui/fonts";
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Poslite Dashboard",
+    template: "%s | Poslite ",
     default: "Poslite Dashboard",
   },
   description: "Point of Sales application for your need.",
