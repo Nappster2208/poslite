@@ -117,9 +117,13 @@ const NavLinks: React.FC = () => {
                 {submenu && (
                   <span className="ml-auto">
                     {openSubmenu === name ? (
-                      <span className="arrow-down">&#x25B2;</span>
+                      <span className="arrow-down text-slate-400">
+                        &#x25B2;
+                      </span>
                     ) : (
-                      <span className="arrow-down">&#x25BC;</span>
+                      <span className="arrow-down text-slate-400">
+                        &#x25BC;
+                      </span>
                     )}
                   </span>
                 )}
