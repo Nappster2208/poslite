@@ -37,12 +37,14 @@ export default function Form() {
               <input
                 id="productCode"
                 name="productCode"
-                className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-full cursor-text rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 defaultValue=""
                 aria-describedby="code-error"
+                placeholder="Enter unique product code"
               ></input>
               <QrCodeIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
             </div>
+            <Button>Generate Code</Button>
           </div>
 
           {/* Product Barcode */}
@@ -57,9 +59,10 @@ export default function Form() {
               <input
                 id="productBarcode"
                 name="productBarcode"
-                className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-full cursor-text rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 defaultValue=""
                 aria-describedby="barcode-error"
+                placeholder="Enter product barcode here"
               ></input>
               <QrCodeIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
             </div>
@@ -113,9 +116,10 @@ export default function Form() {
                 <input
                   id="productName"
                   name="productName"
-                  className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                  className="peer block w-full cursor-text rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                   defaultValue=""
                   aria-describedby="name-error"
+                  placeholder="Enter Name"
                 ></input>
                 <PencilSquareIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
               </div>
@@ -134,9 +138,10 @@ export default function Form() {
                   id="productDescription"
                   name="productDescription"
                   rows={5}
-                  className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                  className="peer block w-full cursor-text rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                   defaultValue=""
                   aria-describedby="description-error"
+                  placeholder="Enter description"
                 ></textarea>
                 <PencilSquareIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
               </div>
@@ -158,7 +163,7 @@ export default function Form() {
                     name="productCategories"
                     aria-describedby="category-error"
                     defaultValue=""
-                    className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                    className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                   >
                     <option value="" disabled>
                       Select a Category
@@ -176,41 +181,23 @@ export default function Form() {
         <div className="mt-2 bg-white shadow-md p-2 rounded-lg">
           <div className="grid">
             {/* Product Price */}
-            <div className="mb-4 lg:flex justify-between items-center">
-              <label
-                htmlFor="purchasePrice"
-                className="mb-2 block text-sm font-medium"
-              >
-                Purchase Price
-              </label>
-              <div className="relative">
-                <input
-                  id="purchasePrice"
-                  name="purchasePrice"
-                  type="number"
-                  className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                  defaultValue=""
-                  aria-describedby="name-error"
-                ></input>
-                <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
-              </div>
-              <label
-                htmlFor="margin"
-                className="mb-2 block text-sm font-medium"
-              >
-                Margin
-              </label>
-              <div className="relative">
-                <input
-                  id="margin"
-                  name="margin"
-                  type="number"
-                  className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                  defaultValue=""
-                  aria-describedby="name-error"
-                ></input>
-                <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
-              </div>
+            <label
+              htmlFor="purchasePrice"
+              className="mb-2 block text-sm font-medium"
+            >
+              Purchase Price
+            </label>
+            <div className="relative">
+              <input
+                id="purchasePrice"
+                name="purchasePrice"
+                type="number"
+                className="peer block w-full cursor-text rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                defaultValue=""
+                aria-describedby="name-error"
+                placeholder="Enter purchase amount"
+              ></input>
+              <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
             </div>
             <AddInput />
             {/* <input
