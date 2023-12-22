@@ -150,10 +150,10 @@ export function AddInput() {
             variant="contained"
             type="button"
             onClick={handleAddInput}
-            className="bg-cyan-300 rounded-full h-8"
+            className="ml-2 rounded-full bg-blue-500 hover:bg-blue-600 px-3 py-1.5 text-xs font-medium text-white"
             endIcon={<Add />}
           >
-            <span className="p-2">Add more prices</span>
+            <span>Add more prices</span>
           </Button>
         )}
       </div>
