@@ -77,7 +77,10 @@ const NavLinks: React.FC = () => {
         onClick={(e) => e.stopPropagation()} // Prevent submenu click from closing parent
       >
         {submenu.map((sublink) => (
-          <li key={sublink.name}>
+          <li
+            key={sublink.name}
+            className="transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-100 duration-300"
+          >
             <Link href={sublink.href} legacyBehavior>
               <a
                 onClick={(e) => handleSubmenuClick(e, sublink.name)}
@@ -103,7 +106,10 @@ const NavLinks: React.FC = () => {
       {links.map((link) => {
         const { icon: LinkIcon, href, name, submenu } = link;
         return (
-          <div key={name} className="relative">
+          <div
+            key={name}
+            className="relative transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-100 duration-300"
+          >
             <Link href={href} legacyBehavior>
               <a
                 onClick={() => handleToggleSubmenu(name)}
