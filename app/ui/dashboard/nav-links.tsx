@@ -1,104 +1,136 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import clsx from "clsx";
 import {
-  HomeIcon,
-  CogIcon,
+  ClipboardDocumentListIcon,
+  Cog6ToothIcon,
   TagIcon,
   ScaleIcon,
-  ClipboardDocumentCheckIcon,
-} from "@heroicons/react/24/outline"; // Change the icon imports as needed
-import { usePathname } from "next/navigation";
+  HomeIcon,
+} from "@heroicons/react/24/outline";
 
-interface NavLink {
+type SubmenuLink = {
   name: string;
   href: string;
-  icon: React.ElementType<any>; // Change this to React.ComponentType
-  hasSubmenu?: boolean; // Make hasSubmenu optional
-  submenu?: NavLink[];
-}
+  icon: React.ElementType<any>;
+};
 
-const links: NavLink[] = [
+type Link = {
+  name: string;
+  href: string;
+  icon: React.ElementType<any>;
+  submenu?: SubmenuLink[];
+};
+
+const links: Link[] = [
   { name: "Home Page", href: "/dashboard", icon: HomeIcon },
   {
     name: "Products",
     href: "/dashboard/products",
-    icon: ClipboardDocumentCheckIcon,
+    icon: ClipboardDocumentListIcon,
   },
   {
-    name: "Reference",
+    name: "Tools",
     href: "",
-    icon: CogIcon,
-    hasSubmenu: true,
+    icon: Cog6ToothIcon,
     submenu: [
       {
         name: "Categories",
-        href: "/dashboard/reference/categories",
+        href: "/dashboard/tools/categories",
         icon: TagIcon,
       },
-      {
-        name: "Units",
-        href: "/dashboard/reference/units",
-        icon: ScaleIcon,
-      },
+      { name: "Units", href: "/dashboard/tools/units", icon: ScaleIcon },
     ],
   },
 ];
 
-const NavLinks: React.FC<{ items: NavLink[] }> = ({ items }) => {
+const NavLinks: React.FC = () => {
   const pathname = usePathname();
+  const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
+
+  const handleToggleSubmenu = (name: string) => {
+    setOpenSubmenu((prev) => (prev === name ? null : name));
+  };
+
+  const handleSubmenuClick = (e: React.MouseEvent, name: string) => {
+    e.stopPropagation();
+    // Handle the click on the submenu item as needed
+    // You can add navigation logic or any other actions here
+  };
+
+  const renderSubMenu = (
+    submenu: SubmenuLink[] | undefined,
+    parentName: string
+  ) => {
+    if (!submenu) {
+      return null;
+    }
+
+    return (
+      <ul
+        className={clsx("ml-6 space-y-1 mt-1", {
+          hidden: openSubmenu !== parentName,
+        })}
+        onClick={(e) => e.stopPropagation()} // Prevent submenu click from closing parent
+      >
+        {submenu.map((sublink) => (
+          <li key={sublink.name}>
+            <Link href={sublink.href} legacyBehavior>
+              <a
+                onClick={(e) => handleSubmenuClick(e, sublink.name)}
+                className={clsx(
+                  "flex h-[48px] items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3",
+                  {
+                    "text-blue-600": pathname === sublink.href,
+                  }
+                )}
+              >
+                {sublink.icon && <sublink.icon className="w-6" />}
+                {sublink.name}
+              </a>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    );
+  };
 
   return (
     <>
-      {items.map((link) => {
-        const LinkIcon = link.icon;
-
-        if (link.hasSubmenu) {
-          return (
-            <div key={link.name} className="relative group">
-              <Link href={link.href} legacyBehavior>
-                <a
-                  className={clsx(
-                    "flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3",
-                    { "bg-sky-100 text-blue-600": pathname === link.href }
-                  )}
-                >
-                  <LinkIcon className="w-6" />
-                  <p className="hidden md:block">{link.name}</p>
-                </a>
-              </Link>
-
-              {link.hasSubmenu && (
-                <div className="absolute hidden group-hover:block space-y-2">
-                  <NavLinks items={link.submenu || []} />
-                </div>
-              )}
-            </div>
-          );
-        }
-
+      {links.map((link) => {
+        const { icon: LinkIcon, href, name, submenu } = link;
         return (
-          <Link key={link.name} href={link.href} legacyBehavior>
-            <a
-              className={clsx(
-                "flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3",
-                { "bg-sky-100 text-blue-600": pathname === link.href }
-              )}
-            >
-              <LinkIcon className="w-6" />
-              <p className="hidden md:block">{link.name}</p>
-            </a>
-          </Link>
+          <div key={name} className="relative">
+            <Link href={href} legacyBehavior>
+              <a
+                onClick={() => handleToggleSubmenu(name)}
+                className={clsx(
+                  "flex h-[48px] items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3",
+                  { "bg-sky-100 text-blue-600": pathname === href }
+                )}
+              >
+                {LinkIcon && <LinkIcon className="w-6" />}
+                <p className="hidden md:block">{name}</p>
+                {submenu && (
+                  <span className="ml-auto">
+                    {openSubmenu === name ? (
+                      <span className="arrow-down">&#x25B2;</span>
+                    ) : (
+                      <span className="arrow-down">&#x25BC;</span>
+                    )}
+                  </span>
+                )}
+              </a>
+            </Link>
+            {renderSubMenu(submenu, name)}
+          </div>
         );
       })}
     </>
   );
 };
 
-const Sidebar = () => {
-  return <NavLinks items={links} />;
-};
-
-export default Sidebar;
+export default NavLinks;
