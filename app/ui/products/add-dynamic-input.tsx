@@ -54,12 +54,12 @@ export function AddInput() {
   };
 
   return (
-    <div className="mb-4">
+    <div className="mb-4 mt-2">
       <label className="mb-2 block text-sm font-medium">Set Prices</label>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col md:items-center">
         {inputs.map((input) => (
           <div key={input.id} className="mb-4">
-            <div className="flex justify-between items-center mt-2 rounded-md gap-4">
+            <div className="flex flex-col md:flex-row justify-between items-le mt-2 rounded-md gap-4">
               <label
                 htmlFor={`qty-${input.id}`}
                 className="mb-2 block text-sm font-medium"
