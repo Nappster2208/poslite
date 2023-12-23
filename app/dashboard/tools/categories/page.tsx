@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { lusitana } from "@/app/ui/fonts";
 import Search from "@/app/ui/search";
 import { CreateCategory } from "@/app/ui/tools/categories/buttons";
+import CategoryTable from "@/app/ui/tools/categories/table";
 
 export const metadata: Metadata = {
   title: "Categories",
@@ -23,7 +24,7 @@ export default function Page({
         <Search placeholder="Search products..." />
         <CreateCategory />
       </div>
-      {/* <Table query={query} currentPage={currentPage} /> */}
+      <CategoryTable query={query} currentPage={currentPage} />
       <div className="mt-5 flex w-full justify-center">
         {/* <Pagination totalPages={totalPages} /> */}
       </div>
