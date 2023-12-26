@@ -1,16 +1,19 @@
-// models/Category.ts
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose from "mongoose";
 
-export interface CategoryDocument extends Document {
-  name: string;
-  description: string;
-}
+const { Schema } = mongoose;
 
-const categorySchema = new Schema<CategoryDocument>({
-  name: { type: String, required: true },
-  description: { type: String, required: false },
-});
+const categorySchema = new Schema(
+  {
+    catName: {
+      type: String,
+      required: true,
+    },
+    catDesc: {
+      type: String,
+    },
+  },
+  { timestamps: true }
+);
 
-const Category = mongoose.model<CategoryDocument>("Category", categorySchema);
-
-export default Category;
+export default mongoose.models.r_categories ||
+  mongoose.model("r_categories", categorySchema);

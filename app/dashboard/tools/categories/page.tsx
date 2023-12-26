@@ -3,18 +3,21 @@ import { lusitana } from "@/app/ui/fonts";
 import Search from "@/app/ui/search";
 import { CreateCategory } from "@/app/ui/tools/categories/buttons";
 import CategoryTable from "@/app/ui/tools/categories/table";
+import { FetchCategoryPage } from "@/app/lib/data";
 
 export const metadata: Metadata = {
   title: "Categories",
 };
 
-export default function Page({
+export default async function Page({
   searchParams,
 }: {
   searchParams?: { query?: string; page?: string };
 }) {
   const query = searchParams?.query || "";
   const currentPage = Number(searchParams?.page || 1);
+
+  const totalPages = await FetchCategoryPage(query);
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
