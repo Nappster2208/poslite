@@ -3,11 +3,14 @@
 import { PencilIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { Buttons } from "../../button";
+import { CategoryField } from "@/app/lib/definitions";
+import { createCategory } from "@/app/lib/action";
+import { useFormState } from "react-dom";
 
-const Form = () => {
+export default function Form() {
   return (
     <>
-      <form>
+      <form action={createCategory}>
         <div className="rounded-md p-4 md:p-6">
           <div className="bg-white shadow-md p-2 rounded-lg">
             {/* Product Code */}
@@ -60,5 +63,4 @@ const Form = () => {
       </form>
     </>
   );
-};
-export default Form;
+}

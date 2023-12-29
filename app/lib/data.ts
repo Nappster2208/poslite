@@ -1,5 +1,6 @@
 import { unstable_noStore as noStore } from "next/cache";
 import m_categories from "./(models)/m_categories";
+import connect from "./(connection)/connection";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -11,6 +12,7 @@ export async function FetchFilteredCategories(
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
+    await connect();
     const categories = await m_categories
       .find({
         $or: [
@@ -32,6 +34,7 @@ export async function FetchFilteredCategories(
 export async function FetchCategoryPage(query: string) {
   noStore();
   try {
+    await connect();
     const count = await m_categories.countDocuments({});
     const totalPage = Math.ceil(count / ITEMS_PER_PAGE);
     return totalPage;
