@@ -20,7 +20,7 @@ export async function FetchFilteredCategories(
           { catDesc: { $regex: new RegExp(query, "i") } },
         ],
       })
-      .sort({ date: -1 })
+      .sort({ createdAt: -1 })
       .skip(offset)
       .limit(ITEMS_PER_PAGE);
     return categories;

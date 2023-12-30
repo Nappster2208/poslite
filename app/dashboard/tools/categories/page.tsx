@@ -4,6 +4,7 @@ import Search from "@/app/ui/search";
 import { CreateCategory } from "@/app/ui/tools/categories/buttons";
 import CategoryTable from "@/app/ui/tools/categories/table";
 import { FetchCategoryPage } from "@/app/lib/data";
+import Pagination from "@/app/ui/pagination";
 
 export const metadata: Metadata = {
   title: "Categories",
@@ -24,12 +25,12 @@ export default async function Page({
         <h1 className={`${lusitana.className} text-2xl`}>Categories</h1>
       </div>
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
-        <Search placeholder="Search products..." />
+        <Search placeholder="Search category..." />
         <CreateCategory />
       </div>
       <CategoryTable query={query} currentPage={currentPage} />
       <div className="mt-5 flex w-full justify-center">
-        {/* <Pagination totalPages={totalPages} /> */}
+        <Pagination totalPages={totalPages} />
       </div>
     </div>
   );
