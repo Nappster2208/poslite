@@ -2,24 +2,22 @@
 
 import connect from "./(connection)/connection";
 import m_categories from "./(models)/m_categories";
-import { z } from "zod";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
-// Define Zod schema for formData
-const categorySchema = z.object({
-  catName: z.string().min(1).max(10), // Adjust the min and max values as needed
-  catDesc: z.string().min(1).max(100), // Adjust the min and max values as needed
-});
+interface CategoryData {
+  catName: string;
+  catDesc: string;
+}
 
-export async function createCategory(formData: FormData) {
-  const data = categorySchema.parse({
-    catName: formData.get("catName"),
-    catDesc: formData.get("catDesc"),
-  });
-
-  console.log(data);
-
+export async function createCategory(formData: CategoryData) {
   try {
     await connect();
-    await m_categories.create(data);
-  } catch (error) {}
+    await m_categories.create(formData);
+  } catch (error) {
+    throw error;
+  }
+
+  revalidatePath("/dashboard/tools/categories");
+  redirect("/dashboard/tools/categories");
 }

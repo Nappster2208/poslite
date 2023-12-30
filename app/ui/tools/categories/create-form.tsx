@@ -3,14 +3,38 @@
 import { PencilIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { Buttons } from "../../button";
-import { CategoryField } from "@/app/lib/definitions";
 import { createCategory } from "@/app/lib/action";
-import { useFormState } from "react-dom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import {
+  categorySchema,
+  categorySchemaType,
+} from "@/validation/categorySchema";
 
 export default function Form() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<categorySchemaType>({
+    resolver: yupResolver(categorySchema),
+  });
+  const onSubmit = async (data: categorySchemaType) => {
+    try {
+      // Call the createCategory function with the form data
+      await createCategory({
+        catName: data.catName,
+        catDesc: data.catDesc,
+      });
+      console.log("Category created successfully!");
+    } catch (error) {
+      console.error("Error creating category:", error);
+    }
+  };
+
   return (
     <>
-      <form action={createCategory}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="rounded-md p-4 md:p-6">
           <div className="bg-white shadow-md p-2 rounded-lg">
             {/* Product Code */}
@@ -24,10 +48,11 @@ export default function Form() {
               <div className="relative">
                 <input
                   id="catName"
-                  name="catName"
                   className="peer block w-full cursor-text rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                   placeholder="Enter Category Name"
-                ></input>
+                  {...register("catName")}
+                />
+                <span className="text-red-400">{errors.catName?.message}</span>
                 <PencilIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
               </div>
             </div>
@@ -41,10 +66,11 @@ export default function Form() {
               <div className="relative">
                 <input
                   id="catDesc"
-                  name="catDesc"
                   className="peer block w-full cursor-text rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                   placeholder="Enter Category Description"
-                ></input>
+                  {...register("catDesc")}
+                />
+                <span className="text-red-400">{errors.catName?.message}</span>
                 <PencilIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
               </div>
             </div>
