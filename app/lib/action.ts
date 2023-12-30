@@ -1,5 +1,6 @@
 "use server";
 
+import { NextResponse } from "next/server";
 import connect from "./(connection)/connection";
 import m_categories from "./(models)/m_categories";
 import { revalidatePath } from "next/cache";
@@ -14,10 +15,9 @@ export async function createCategory(formData: CategoryData) {
   try {
     await connect();
     await m_categories.create(formData);
+    revalidatePath("/dashboard/tools/categories");
   } catch (error) {
-    throw error;
+    console.error("Error creating category:", error);
   }
-
-  revalidatePath("/dashboard/tools/categories");
   redirect("/dashboard/tools/categories");
 }

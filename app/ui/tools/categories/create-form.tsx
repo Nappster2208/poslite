@@ -10,6 +10,7 @@ import {
   categorySchema,
   categorySchemaType,
 } from "@/validation/categorySchema";
+import { toast } from "sonner";
 
 export default function Form() {
   const {
@@ -26,9 +27,9 @@ export default function Form() {
         catName: data.catName,
         catDesc: data.catDesc,
       });
-      console.log("Category created successfully!");
+      toast.success("Category created successfully!");
     } catch (error) {
-      console.error("Error creating category:", error);
+      toast.success("Error creating category: " + error);
     }
   };
 
