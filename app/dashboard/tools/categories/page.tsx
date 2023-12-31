@@ -5,6 +5,8 @@ import { CreateCategory } from "@/app/ui/tools/categories/buttons";
 import CategoryTable from "@/app/ui/tools/categories/table";
 import { FetchCategoryPage } from "@/app/lib/data";
 import Pagination from "@/app/ui/pagination";
+import { Suspense } from "react";
+import { InvoicesTableSkeleton } from "@/app/ui/skeletons";
 
 export const metadata: Metadata = {
   title: "Categories",
@@ -28,7 +30,9 @@ export default async function Page({
         <Search placeholder="Search category..." />
         <CreateCategory />
       </div>
-      <CategoryTable query={query} currentPage={currentPage} />
+      <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
+        <CategoryTable query={query} currentPage={currentPage} />
+      </Suspense>
       <div className="mt-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />
       </div>
