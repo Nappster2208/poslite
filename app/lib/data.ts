@@ -30,6 +30,16 @@ export async function FetchFilteredCategories(
   }
 }
 
+export async function FetchCategoryWithId(id: string) {
+  noStore();
+  try {
+    const category = await m_categories.find({ _id: id });
+    return category;
+  } catch (error) {
+    throw new Error("Failed to fetch category.");
+  }
+}
+
 //Count Total Page of Categories
 export async function FetchCategoryPage(query: string) {
   noStore();
