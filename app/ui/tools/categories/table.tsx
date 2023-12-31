@@ -1,4 +1,5 @@
 import { FetchFilteredCategories } from "@/app/lib/data";
+import { DeleteCategory, UpdateCategory } from "./buttons";
 
 export default async function CategoryTable({
   query,
@@ -29,8 +30,8 @@ export default async function CategoryTable({
                 </div>
                 <div className="flex w-full items-center justify-between pt-4">
                   <div className="flex justify-end gap-2">
-                    {/* <UpdateInvoice id={category.id} />
-                    <DeleteInvoice id={category.id} /> */}
+                    <UpdateCategory id={category.id} />
+                    <DeleteCategory id={category.id} />
                   </div>
                 </div>
               </div>
@@ -66,8 +67,8 @@ export default async function CategoryTable({
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
-                      {/* <UpdateInvoice id={category.id} />
-                      <DeleteInvoice id={category.id} /> */}
+                      <UpdateCategory id={category.id} />
+                      <DeleteCategory id={category.id} />
                     </div>
                   </td>
                 </tr>
