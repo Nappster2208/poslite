@@ -1,4 +1,4 @@
-import Breadcrumbs from "@/app/ui/products/breadcrumbs";
+import Breadcrumbs from "@/app/ui/breadcrumbs";
 import Form from "@/app/ui/tools/categories/create-form";
 
 const page = () => {
