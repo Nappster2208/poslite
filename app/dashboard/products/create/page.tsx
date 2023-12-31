@@ -1,5 +1,5 @@
 // import { fetchCustomers } from '@/app/lib/data';
-import Breadcrumbs from "@/app/ui/products/breadcrumbs";
+import Breadcrumbs from "@/app/ui/breadcrumbs";
 import Form from "@/app/ui/products/create-form";
 import { Metadata } from "next";
 
