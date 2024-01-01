@@ -37,3 +37,22 @@ export function DeleteCategory({ id }: { id: string }) {
     </form>
   );
 }
+
+export function AddSubCategory({
+  id,
+  otherSub,
+}: {
+  id: string;
+  otherSub: string[];
+}) {
+  const subString = otherSub ? otherSub.join(",") : "";
+  return (
+    <Link
+      href={`/dashboard/tools/categories/${id}/subcat?sub=${subString}`}
+      className="rounded-md border p-2 hover:bg-gray-100"
+    >
+      <span className="sr-only">Add Sub</span>
+      <PlusIcon className="w-5" />
+    </Link>
+  );
+}
