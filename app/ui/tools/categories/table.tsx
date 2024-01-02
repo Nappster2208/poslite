@@ -30,10 +30,7 @@ export default async function CategoryTable({
                 </div>
                 <div className="flex w-full items-center justify-between pt-4">
                   <div className="flex justify-end gap-2">
-                    <AddSubCategory
-                      id={category.id}
-                      otherSub={["value1", "value2"]}
-                    />
+                    <AddSubCategory id={category.id} otherSub={[]} />
                     <UpdateCategory id={category.id} />
                     <DeleteCategory id={category.id} />
                   </div>
@@ -71,7 +68,10 @@ export default async function CategoryTable({
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
-                      <AddSubCategory id={category.id} otherSub={[]} />
+                      <AddSubCategory
+                        id={category.id}
+                        otherSub={["value", "value"]}
+                      />
                       <UpdateCategory id={category.id} />
                       <DeleteCategory id={category.id} />
                     </div>

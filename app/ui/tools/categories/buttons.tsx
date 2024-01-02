@@ -45,7 +45,8 @@ export function AddSubCategory({
   id: string;
   otherSub: string[];
 }) {
-  const subString = otherSub ? otherSub.join(",") : "";
+  const subString =
+    otherSub.length > 1 ? otherSub.join(",") : otherSub[0] || "";
   return (
     <Link
       href={`/dashboard/tools/categories/${id}/subcat?sub=${subString}`}
