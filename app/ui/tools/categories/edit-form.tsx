@@ -29,6 +29,7 @@ const EditCategoryForm: React.FC<{ category: any }> = ({ category }) => {
   } = useForm<categorySchemaType>({
     resolver: yupResolver(categorySchema),
   });
+
   const onSubmit = async (data: categorySchemaType) => {
     try {
       // Call the createCategory function with the form data
@@ -83,7 +84,7 @@ const EditCategoryForm: React.FC<{ category: any }> = ({ category }) => {
                   placeholder="Enter Category Description"
                   {...register("catDesc")}
                 />
-                <span className="text-red-400">{errors.catName?.message}</span>
+                <span className="text-red-400">{errors.catDesc?.message}</span>
                 <PencilIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
               </div>
             </div>

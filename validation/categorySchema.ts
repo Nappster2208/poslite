@@ -8,3 +8,12 @@ export const categorySchema = yup
   .required();
 
 export type categorySchemaType = yup.InferType<typeof categorySchema>;
+
+export const subcategorySchema = yup
+  .object({
+    subcatName: yup.string().min(3).max(20).required(),
+    subcatDesc: yup.string().min(3).max(100).required(),
+  })
+  .required();
+
+export type subcategorySchemaType = yup.InferType<typeof subcategorySchema>;

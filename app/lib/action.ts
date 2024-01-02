@@ -17,6 +17,11 @@ interface CategoryData {
   catDesc: string;
 }
 
+interface SubCategoryData {
+  subcatName: string;
+  subcatDesc: string;
+}
+
 export async function createCategory(formData: CategoryData) {
   try {
     await connect();
@@ -62,4 +67,43 @@ export async function deleteCategory(id: string) {
       { status: 400 }
     );
   }
+}
+
+export async function AddSubCategory(id: string, formData: SubCategoryData) {
+  const { subcatName, subcatDesc } = formData;
+  console.log(subcatName, subcatDesc);
+  try {
+    await connect();
+
+    await m_categories.updateOne(
+      { _id: id },
+      {
+        $set: {
+          subCategory: {
+            subcatName: subcatName,
+            subcatDesc: subcatDesc,
+          },
+        },
+      }
+    );
+    // await m_categories.findByIdAndUpdate(id, {
+    //   $set: {
+    //     subCategory: [
+    //       {
+    //         subcatName: subcatName,
+    //         subcatDesc: subcatDesc,
+    //       },
+    //     ],
+    //   },
+    // });
+
+    revalidatePath("/dashboard/tools/categories");
+  } catch (error) {
+    console.error("Error updating sub category:", error);
+    return NextResponse.json(
+      { message: "Error updating sub category: ", error },
+      { status: 400 }
+    );
+  }
+  redirect("/dashboard/tools/categories");
 }
