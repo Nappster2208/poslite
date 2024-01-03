@@ -1,55 +1,38 @@
 "use client";
 
-import React, { useState } from "react";
-import { usePathname } from "next/navigation";
+import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
+import { SubmenuLink } from "@/app/lib/types";
 import clsx from "clsx";
-import {
-  ClipboardDocumentListIcon,
-  Cog6ToothIcon,
-  TagIcon,
-  ScaleIcon,
-  HomeIcon,
-} from "@heroicons/react/24/outline";
+import * as SolidIcons from "@heroicons/react/24/solid";
+import * as OutlineIcons from "@heroicons/react/24/outline";
 
-type SubmenuLink = {
-  name: string;
-  href: string;
-  icon: React.ElementType<any>;
+interface Props {
+  icon: any;
+  color?: string;
+  size?: number;
+  outline?: boolean;
+}
+
+export const HeroIcon = (props: Props): JSX.Element => {
+  const { icon, color, size, outline = false } = props;
+  const { ...icons } = outline ? (OutlineIcons as any) : (SolidIcons as any);
+  const Icon = icons[icon] as React.ElementType<any>;
+  const classes = [
+    `${color ? color : "text-black"}`,
+    size ? "h-6" : "h-6",
+    size ? "w-6" : "w-6",
+  ];
+  return <Icon className={classes.join(" ")} />;
 };
 
-type Link = {
-  name: string;
-  href: string;
-  icon: React.ElementType<any>;
-  submenu?: SubmenuLink[];
-};
-
-const links: Link[] = [
-  { name: "Home Page", href: "/dashboard", icon: HomeIcon },
-  {
-    name: "Products",
-    href: "/dashboard/products",
-    icon: ClipboardDocumentListIcon,
-  },
-  {
-    name: "Tools",
-    href: "",
-    icon: Cog6ToothIcon,
-    submenu: [
-      {
-        name: "Categories",
-        href: "/dashboard/tools/categories",
-        icon: TagIcon,
-      },
-      { name: "Units", href: "/dashboard/tools/units", icon: ScaleIcon },
-    ],
-  },
-];
-
-const NavLinks: React.FC = () => {
+export default function NavLinks() {
   const pathname = usePathname();
+  const [menus, setMenus] = useState<any>(null);
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
+  const [isLoading, setLoading] = useState(true);
 
   const handleToggleSubmenu = (name: string) => {
     setOpenSubmenu((prev) => (prev === name ? null : name));
@@ -57,8 +40,6 @@ const NavLinks: React.FC = () => {
 
   const handleSubmenuClick = (e: React.MouseEvent, name: string) => {
     e.stopPropagation();
-    // Handle the click on the submenu item as needed
-    // You can add navigation logic or any other actions here
   };
 
   const renderSubMenu = (
@@ -91,7 +72,14 @@ const NavLinks: React.FC = () => {
                   }
                 )}
               >
-                {sublink.icon && <sublink.icon className="w-6" />}
+                {sublink.icon && (
+                  <HeroIcon
+                    icon={sublink.icon}
+                    color="text-slate-700"
+                    size={6}
+                    outline
+                  />
+                )}
                 {sublink.name}
               </a>
             </Link>
@@ -101,13 +89,24 @@ const NavLinks: React.FC = () => {
     );
   };
 
+  useEffect(() => {
+    fetch("/api/menus")
+      .then((res) => res.json())
+      .then((data) => {
+        setMenus(data);
+        setLoading(false);
+      });
+  }, []);
+
+  if (isLoading) return <p>Loading...</p>;
+  if (!menus) return <p>No profile data</p>;
   return (
     <>
-      {links.map((link) => {
-        const { icon: LinkIcon, href, name, submenu } = link;
+      {menus.map((menu: any) => {
+        const { icon: LinkIcon, href, name, submenu, id } = menu;
         return (
           <div
-            key={name}
+            key={id}
             className="relative transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-100 duration-300"
           >
             <Link href={href} legacyBehavior>
@@ -118,9 +117,18 @@ const NavLinks: React.FC = () => {
                   { "bg-sky-100 text-blue-600": pathname === href }
                 )}
               >
-                {LinkIcon && <LinkIcon className="w-6" />}
+                {/* {LinkIcon && <LinkIcon className="w-6" />} */}
+                {LinkIcon && (
+                  <HeroIcon
+                    icon={LinkIcon}
+                    color="text-slate-700"
+                    size={6}
+                    outline
+                  />
+                )}
+
                 <p className="hidden md:block">{name}</p>
-                {submenu && (
+                {submenu && submenu.length > 0 && (
                   <span className="ml-auto">
                     {openSubmenu === name ? (
                       <span className="arrow-down text-slate-400">
@@ -141,6 +149,4 @@ const NavLinks: React.FC = () => {
       })}
     </>
   );
-};
-
-export default NavLinks;
+}
