@@ -71,31 +71,37 @@ export async function deleteCategory(id: string) {
 
 export async function AddSubCategory(id: string, formData: SubCategoryData) {
   const { subcatName, subcatDesc } = formData;
-  console.log(subcatName, subcatDesc);
+
   try {
     await connect();
 
-    await m_categories.updateOne(
-      { _id: id },
-      {
-        $set: {
-          subCategory: {
-            subcatName: subcatName,
-            subcatDesc: subcatDesc,
+    const category = await m_categories.findById(id);
+
+    if (category.subCategory && category.subCategory.length > 0) {
+      await m_categories.updateOne(
+        { _id: id },
+        {
+          $push: {
+            subCategory: {
+              subcatName: subcatName,
+              subcatDesc: subcatDesc,
+            },
           },
-        },
-      }
-    );
-    // await m_categories.findByIdAndUpdate(id, {
-    //   $set: {
-    //     subCategory: [
-    //       {
-    //         subcatName: subcatName,
-    //         subcatDesc: subcatDesc,
-    //       },
-    //     ],
-    //   },
-    // });
+        }
+      );
+    } else {
+      await m_categories.updateOne(
+        { _id: id },
+        {
+          $set: {
+            subCategory: {
+              subcatName: subcatName,
+              subcatDesc: subcatDesc,
+            },
+          },
+        }
+      );
+    }
 
     revalidatePath("/dashboard/tools/categories");
   } catch (error) {

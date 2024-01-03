@@ -6,3 +6,11 @@ export interface Link {
   icon?: ReactNode;
   submenu?: Link[];
 }
+
+export interface SubCategories {
+  _id: {
+    $oid: string;
+  };
+  subcatName: string;
+  subcatDesc: string;
+}

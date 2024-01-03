@@ -11,10 +11,12 @@ const categorySchema = new Schema(
     catDesc: {
       type: String,
     },
-    subCategory: {
-      subcatName: { type: String },
-      subcatDesc: { type: String },
-    },
+    subCategory: [
+      {
+        subcatName: { type: String },
+        subcatDesc: { type: String },
+      },
+    ],
   },
   { timestamps: true }
 );

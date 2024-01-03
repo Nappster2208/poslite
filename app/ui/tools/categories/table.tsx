@@ -1,5 +1,7 @@
 import { FetchFilteredCategories } from "@/app/lib/data";
 import { AddSubCategory, DeleteCategory, UpdateCategory } from "./buttons";
+import React from "react";
+import { SubCategories } from "@/app/lib/types";
 
 export default async function CategoryTable({
   query,
@@ -54,26 +56,54 @@ export default async function CategoryTable({
             </thead>
             <tbody className="bg-white">
               {categories?.map((category) => (
-                <tr
-                  key={category.id}
-                  className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
-                >
-                  <td className="whitespace-nowrap py-3 pl-6 pr-3">
-                    <div className="flex items-center gap-3">
-                      <p>{category.catName}</p>
-                    </div>
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-3">
-                    {category.catDesc}
-                  </td>
-                  <td className="whitespace-nowrap py-3 pl-6 pr-3">
-                    <div className="flex justify-end gap-3">
-                      <AddSubCategory id={category.id} otherSub={[]} />
-                      <UpdateCategory id={category.id} />
-                      <DeleteCategory id={category.id} />
-                    </div>
-                  </td>
-                </tr>
+                <React.Fragment key={category.id}>
+                  <tr className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg">
+                    <td className="whitespace-nowrap py-3 pl-6 pr-3">
+                      <div className="flex items-center gap-3">
+                        <p>{category.catName}</p>
+                      </div>
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-3">
+                      {category.catDesc}
+                    </td>
+                    <td className="whitespace-nowrap py-3 pl-6 pr-3">
+                      <div className="flex justify-end gap-3">
+                        <AddSubCategory id={category.id} otherSub={[]} />
+                        <UpdateCategory id={category.id} />
+                        <DeleteCategory id={category.id} />
+                      </div>
+                    </td>
+                  </tr>
+
+                  {/* Subcategory row */}
+                  {category.subCategory &&
+                    category.subCategory.length > 0 &&
+                    category.subCategory.map((subCat: SubCategories) => (
+                      <tr
+                        key={`${category.id}-${subCat._id.$oid}`}
+                        className="border-b py-1 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
+                      >
+                        <td className="whitespace-nowrap py-3 pl-6 pr-3">
+                          <div className="flex items-center gap-3">
+                            <p>{subCat.subcatName}</p>
+                          </div>
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-3">
+                          {subCat.subcatDesc}
+                        </td>
+                        <td className="whitespace-nowrap py-3 pl-6 pr-3">
+                          <div className="flex justify-end gap-3">
+                            <AddSubCategory
+                              id={category.id}
+                              otherSub={[subCat.subcatName]}
+                            />
+                            <UpdateCategory id={category.id} />
+                            <DeleteCategory id={category.id} />
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                </React.Fragment>
               ))}
             </tbody>
           </table>
