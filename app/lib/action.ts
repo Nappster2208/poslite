@@ -74,7 +74,6 @@ export async function AddSubCategory(id: string, formData: SubCategoryData) {
 
   try {
     await connect();
-
     const category = await m_categories.findById(id);
 
     if (category.subCategory && category.subCategory.length > 0) {
