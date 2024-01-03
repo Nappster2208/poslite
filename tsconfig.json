@@ -28,7 +28,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/lib/(connection)/connection.js",
-    "app/api/tes/route.js",
+    "app/api/menus/route.js",
     "app/api/categories/route.js"
   ],
   "exclude": ["node_modules"]
