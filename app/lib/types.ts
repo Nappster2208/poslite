@@ -8,9 +8,23 @@ export interface Link {
 }
 
 export interface SubCategories {
+  _id: { $oid: string };
+  subcatName: string;
+  subcatDesc: string;
+  subCategory2: string[];
+}
+
+export interface Categories {
   _id: {
     $oid: string;
   };
-  subcatName: string;
-  subcatDesc: string;
+  catName: string;
+  catDesc: string;
+  subCategory: string[];
 }
+
+export type SubmenuLink = {
+  name: string;
+  href: string;
+  icon: React.ElementType<any>;
+};
