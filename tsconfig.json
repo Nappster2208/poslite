@@ -30,6 +30,6 @@
     "app/lib/(connection)/connection.js",
     "app/api/menus/route.js",
     "app/api/categories/route.js"
-  ],
+ ],
   "exclude": ["node_modules"]
 }
