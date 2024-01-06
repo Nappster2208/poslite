@@ -35,3 +35,14 @@ export type SubCategoryType = {
   subcatDesc: string;
   _id: string;
 };
+
+export type ResponseError = {
+  message: string;
+};
+
+export type CategoryType = {
+  _id: string;
+  catName: string;
+  catDesc: string;
+  subCategory: Object[];
+};
