@@ -1,6 +1,7 @@
 import { unstable_noStore as noStore } from "next/cache";
 import m_categories from "./(models)/m_categories";
 import connect from "./(connection)/connection";
+import { NextResponse } from "next/server";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -51,5 +52,36 @@ export async function FetchCategoryPage(query: string) {
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch total number of categories.");
+  }
+}
+
+//Count Total Page of Sub Categories
+export async function FetchSubCategoryPage(query: string, id: string) {
+  noStore();
+  try {
+    await connect();
+    const data = await m_categories.find({ _id: id });
+    let totalPage = 1;
+    data.map((item) => {
+      totalPage = Math.ceil(item.subCategory.length / ITEMS_PER_PAGE);
+    });
+    return totalPage;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch total number of categories.");
+  }
+}
+
+export async function FetchFilteredSubCategories(id: string) {
+  noStore();
+
+  try {
+    await connect();
+    const data = await m_categories.find({ _id: id });
+    // return new NextResponse(JSON.stringify(data), { status: 200 });
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch filtered categories.");
   }
 }
