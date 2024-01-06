@@ -1,3 +1,4 @@
+import { ObjectId } from "mongoose";
 import { ReactNode } from "react";
 
 export interface Link {
@@ -27,4 +28,10 @@ export type SubmenuLink = {
   name: string;
   href: string;
   icon: React.ElementType<any>;
+};
+
+export type SubCategoryType = {
+  subcatName: string;
+  subcatDesc: string;
+  _id: string;
 };

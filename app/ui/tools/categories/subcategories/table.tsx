@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import {
   AddSubCategory,
@@ -6,20 +5,10 @@ import {
   SubCategoriesBtn,
   UpdateCategory,
 } from "../buttons";
+import { ObjectId } from "mongoose";
+import { SubCategoryType } from "@/app/lib/types";
 
-type Subcategory = {
-  subcatName: string;
-  subcatDesc: string;
-  _id: string; // Ini bisa berupa string atau tipe lainnya tergantung implementasi ObjectId Anda
-};
-
-interface SubcategoryListComponentProps {
-  data: Subcategory[];
-}
-
-const SubCategoryTable: React.FC<SubcategoryListComponentProps> = ({
-  data,
-}) => {
+const SubCategoryTable = ({ data }: { data: string }) => {
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">

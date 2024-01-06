@@ -77,9 +77,11 @@ export async function FetchFilteredSubCategories(id: string) {
 
   try {
     await connect();
-    const data = await m_categories.find({ _id: id });
-    // return new NextResponse(JSON.stringify(data), { status: 200 });
-    return data;
+    const data = await m_categories.findOne(
+      { _id: id },
+      { projection: { "subCategory._id": 0 } }
+    );
+    return data?.subCategory || [];
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch filtered categories.");

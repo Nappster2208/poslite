@@ -9,6 +9,7 @@ import React, { Suspense } from "react";
 import { TableSkeleton } from "@/app/ui/skeletons";
 import Breadcrumbs from "@/app/ui/breadcrumbs";
 import SubCategoryTable from "@/app/ui/tools/categories/subcategories/table";
+import { SubCategoryType } from "@/app/lib/types";
 
 export const metadata: Metadata = {
   title: "Sub Categories",
@@ -29,12 +30,10 @@ export default async function Page({
 }) {
   const query = searchParams?.query || "";
   const currentPage = Number(searchParams?.page || 1);
-  let sub: Subcategory[] = [];
   // const totalPages = await FetchSubCategoryPage(query, params.id);
   const subCategories = await FetchFilteredSubCategories(params.id);
-  subCategories.map((item) => {
-    sub = item.subCategory;
-  });
+
+  console.log(subCategories);
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
@@ -53,7 +52,7 @@ export default async function Page({
         {/* <Search placeholder="Search category..." /> */}
         {/* <CreateCategory /> */}
       </div>
-      <SubCategoryTable data={sub} />
+      <SubCategoryTable data={subCategories} />
       <div className="mt-5 flex w-full justify-center">
         {/* <Pagination totalPages={totalPages} /> */}
       </div>
