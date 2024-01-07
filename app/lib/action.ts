@@ -84,6 +84,7 @@ export async function AddSubCategory(id: string, formData: SubCategoryData) {
             subCategory: {
               subcatName: subcatName,
               subcatDesc: subcatDesc,
+              updatedAt: { $type: "date" },
             },
           },
         }
@@ -96,6 +97,8 @@ export async function AddSubCategory(id: string, formData: SubCategoryData) {
             subCategory: {
               subcatName: subcatName,
               subcatDesc: subcatDesc,
+              createdAt: { $type: "date" },
+              updatedAt: { $type: "date" },
             },
           },
         }
