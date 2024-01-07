@@ -27,6 +27,7 @@ export interface Categories {
 export type SubmenuLink = {
   name: string;
   href: string;
+  id: string;
   icon: React.ElementType<any>;
 };
 
