@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import SearchInput from "./search";
 import Pagination from "./pagination";
+import { LoadingSpinner } from "@/app/ui/skeletons";
 
 const SubCategoryTable = ({ id }: { id: string }) => {
   const [data, setData] = useState<
@@ -28,25 +29,23 @@ const SubCategoryTable = ({ id }: { id: string }) => {
 
   const handlePageChange = (page: string | number) => {
     // Convert the page parameter to a number
-    const pageNumber = typeof page === "string" ? parseInt(page, 10) : page;
+    const pageNumber = typeof page === "string" ? parseInt(page) : page;
     setCurrentPage(pageNumber);
   };
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <LoadingSpinner />;
   if (!data || !data.length) {
-    return <p>No subcategories found</p>;
+    return <p>No data found</p>;
   }
-  const filteredSubcategories = data
-    .filter((subcategory) =>
-      subcategory.subcatName.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-    .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
-
-  const totalPages = Math.ceil(
-    data.filter((subcategory) =>
-      subcategory.subcatName.toLowerCase().includes(searchTerm.toLowerCase())
-    ).length / itemsPerPage
+  const filteredData = data.filter((subcategory) =>
+    subcategory.subcatName.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const slicedData = filteredData.slice(startIndex, endIndex);
 
   return (
     <>
@@ -80,7 +79,7 @@ const SubCategoryTable = ({ id }: { id: string }) => {
                 </tr>
               </thead>
               <tbody className="bg-white">
-                {filteredSubcategories.map((subcategory) => (
+                {slicedData.map((subcategory) => (
                   <tr
                     key={subcategory._id}
                     className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"

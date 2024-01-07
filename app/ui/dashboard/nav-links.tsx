@@ -59,7 +59,7 @@ export default function NavLinks() {
       >
         {submenu.map((sublink) => (
           <li
-            key={sublink.name}
+            key={sublink.id}
             className="transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-100 duration-300"
           >
             <Link href={sublink.href} legacyBehavior>
@@ -103,10 +103,10 @@ export default function NavLinks() {
   return (
     <>
       {menus.map((menu: any) => {
-        const { icon: LinkIcon, href, name, submenu, id } = menu;
+        const { icon: LinkIcon, href, name, submenu, _id } = menu;
         return (
           <div
-            key={id}
+            key={_id}
             className="relative transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-100 duration-300"
           >
             <Link href={href} legacyBehavior>
@@ -117,7 +117,6 @@ export default function NavLinks() {
                   { "bg-sky-100 text-blue-600": pathname === href }
                 )}
               >
-                {/* {LinkIcon && <LinkIcon className="w-6" />} */}
                 {LinkIcon && (
                   <HeroIcon
                     icon={LinkIcon}

@@ -5,6 +5,7 @@ import {
   SubCategoriesBtn,
   UpdateCategory,
 } from "./buttons";
+import { Tooltip } from "@mui/material";
 
 export default async function CategoryTable({
   query,
@@ -51,11 +52,83 @@ export default async function CategoryTable({
                     <div className="flex justify-end gap-3">
                       {category.subCategory &&
                         category.subCategory.length > 0 && (
-                          <SubCategoriesBtn id={category.id} />
+                          <Tooltip
+                            title="Sub"
+                            placement="bottom"
+                            arrow
+                            slotProps={{
+                              popper: {
+                                modifiers: [
+                                  {
+                                    name: "offset",
+                                    options: {
+                                      offset: [0, -10],
+                                    },
+                                  },
+                                ],
+                              },
+                            }}
+                          >
+                            <SubCategoriesBtn id={category.id} />
+                          </Tooltip>
                         )}
-                      <AddSubCategory id={category.id} otherSub={[]} />
-                      <UpdateCategory id={category.id} />
-                      <DeleteCategory id={category.id} />
+                      <Tooltip
+                        title="Add Sub"
+                        placement="bottom"
+                        arrow
+                        slotProps={{
+                          popper: {
+                            modifiers: [
+                              {
+                                name: "offset",
+                                options: {
+                                  offset: [0, -10],
+                                },
+                              },
+                            ],
+                          },
+                        }}
+                      >
+                        <AddSubCategory id={category.id} otherSub={[]} />
+                      </Tooltip>
+                      <Tooltip
+                        title="Edit"
+                        placement="bottom"
+                        arrow
+                        slotProps={{
+                          popper: {
+                            modifiers: [
+                              {
+                                name: "offset",
+                                options: {
+                                  offset: [0, -10],
+                                },
+                              },
+                            ],
+                          },
+                        }}
+                      >
+                        <UpdateCategory id={category.id} />
+                      </Tooltip>
+                      <Tooltip
+                        title="Delete"
+                        placement="bottom"
+                        arrow
+                        slotProps={{
+                          popper: {
+                            modifiers: [
+                              {
+                                name: "offset",
+                                options: {
+                                  offset: [0, -10],
+                                },
+                              },
+                            ],
+                          },
+                        }}
+                      >
+                        <DeleteCategory id={category.id} />
+                      </Tooltip>
                     </div>
                   </td>
                 </tr>

@@ -26,7 +26,7 @@ export function UpdateCategory({ id }: { id: string }) {
       className="rounded-md p-1 hover:bg-gray-100 flex flex-col items-center"
     >
       <PencilIcon className="w-5" />
-      <span className="text-xs">Edit</span>
+      <span className="sr-only">Edit</span>
     </Link>
   );
 }
@@ -37,7 +37,7 @@ export function DeleteCategory({ id }: { id: string }) {
     <form action={deleteCategoryWithId}>
       <button className="rounded-md p-1 hover:bg-gray-100 flex flex-col items-center">
         <TrashIcon className="w-5" />
-        <span className="text-xs">Delete</span>
+        <span className="sr-only">Delete</span>
       </button>
     </form>
   );
@@ -58,7 +58,7 @@ export function AddSubCategory({
       className="rounded-md p-1 hover:bg-gray-100 flex flex-col items-center"
     >
       <PlusIcon className="w-5" />
-      <span className="text-xs">Add Sub</span>
+      <span className="sr-only">Add Sub</span>
     </Link>
   );
 }
@@ -70,7 +70,7 @@ export function SubCategoriesBtn({ id }: { id: string }) {
       className="rounded-md p-1 hover:bg-gray-100 flex flex-col items-center"
     >
       <ArrowTopRightOnSquareIcon className="w-5" />
-      <span className="text-xs">Sub</span>
+      <span className="sr-only">Sub</span>
     </Link>
   );
 }
