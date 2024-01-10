@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import SearchInput from "./search";
 import Pagination from "./pagination";
 import { LoadingSpinner } from "@/app/ui/skeletons";
+import { AddSubCategory } from "../buttons";
 
 const SubCategoryTable = ({ id }: { id: string }) => {
   const [data, setData] = useState<
@@ -96,6 +97,7 @@ const SubCategoryTable = ({ id }: { id: string }) => {
                     </td>
                     <td className="py-2">
                       {/* Add your action buttons here */}
+                      {/* <AddSubCategory /> */}
                     </td>
                   </tr>
                 ))}
