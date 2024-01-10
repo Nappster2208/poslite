@@ -4,8 +4,10 @@ import SearchInput from "./search";
 import Pagination from "./pagination";
 import { LoadingSpinner } from "@/app/ui/skeletons";
 import { AddSubCategory } from "../buttons";
+import { lusitana } from "@/app/ui/fonts";
+import clsx from "clsx";
 
-const SubCategoryTable = ({ id }: { id: string }) => {
+const SubCategoryTable = ({ id, catName }: { id: string; catName: string }) => {
   const [data, setData] = useState<
     Array<{ _id: string; subcatName: string; subcatDesc: string }>
   >([]);
@@ -50,6 +52,11 @@ const SubCategoryTable = ({ id }: { id: string }) => {
 
   return (
     <>
+      <nav className="block">
+        <ol className={clsx(lusitana.className, "flex text-xl md:text-2xl")}>
+          <span className="mx-1 inline-block">Category : {catName}</span>
+        </ol>
+      </nav>
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
         <div className="relative flex flex-1 flex-shrink-0 mb-4">
           <label htmlFor="search" className="sr-only">

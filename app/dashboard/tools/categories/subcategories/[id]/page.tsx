@@ -1,15 +1,19 @@
 import { Metadata } from "next";
-import Pagination from "@/app/ui/pagination";
 import React from "react";
 import Breadcrumbs from "@/app/ui/breadcrumbs";
 import SubCategoryTable from "@/app/ui/tools/categories/subcategories/table";
-import { FetchSubCategoryPage } from "@/app/lib/data";
+import { FetchCategoryPage, FetchCategoryWithId } from "@/app/lib/data";
 
 export const metadata: Metadata = {
   title: "Sub Categories",
 };
 
 export default async function Page({ params }: { params: { id: string } }) {
+  const category = await FetchCategoryWithId(params.id);
+  let catName = "";
+  category.map((item) => {
+    catName = item.catName;
+  });
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
@@ -24,7 +28,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           ]}
         />
       </div>
-      <SubCategoryTable id={params.id} />
+      <SubCategoryTable id={params.id} catName={catName} />
     </div>
   );
 }
