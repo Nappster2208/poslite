@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { lusitana } from "@/app/ui/fonts";
 import Search from "@/app/ui/search";
-import { CreateCategory } from "@/app/ui/tools/categories/buttons";
+import { AddSubCategory } from "@/app/ui/tools/categories/buttons";
 import { FetchCategoryWithId, FetchSubCategoryPage } from "@/app/lib/data";
 import Pagination from "@/app/ui/pagination";
 import { Suspense } from "react";
@@ -52,7 +52,11 @@ export default async function Page({
       </div>
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
         <Search placeholder="Search sub category..." />
-        <CreateCategory />
+        <AddSubCategory
+          id={params.id}
+          otherSub={[]}
+          className="flex h-10 items-center rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+        />
       </div>
       <Suspense key={query + currentPage} fallback={<TableSkeleton />}>
         <SubCategoryTable
