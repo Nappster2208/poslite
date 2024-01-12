@@ -19,10 +19,23 @@ export function CreateCategory() {
   );
 }
 
-export function UpdateCategory({ id }: { id: string }) {
+export function UpdateCategory({
+  parentId,
+  subsId1,
+  subsId2,
+}: {
+  parentId: string;
+  subsId1: string;
+  subsId2: string;
+}) {
+  let href = "";
+  if (subsId1 !== "") {
+    href = `/dashboard/tools/subcategories/${parentId}/edit?subs1=${subsId1}`;
+  }
+  href = `/dashboard/tools/categories/${parentId}/edit`;
   return (
     <Link
-      href={`/dashboard/tools/categories/${id}/edit`}
+      href={href}
       className="rounded-md p-1 hover:bg-gray-100 flex flex-col items-center"
     >
       <PencilIcon className="w-5" />
@@ -66,7 +79,7 @@ export function AddSubCategory({
 export function SubCategoriesBtn({ id }: { id: string }) {
   return (
     <Link
-      href={`/dashboard/tools/categories/subcategories/${id}`}
+      href={`/dashboard/tools/categories/${id}/subcategories/`}
       className="rounded-md p-1 hover:bg-gray-100 flex flex-col items-center"
     >
       <ArrowTopRightOnSquareIcon className="w-5" />
