@@ -89,7 +89,11 @@ export default async function CategoryTable({
                           },
                         }}
                       >
-                        <AddSubCategory id={category._id} otherSub={[]} />
+                        <AddSubCategory
+                          id={category._id}
+                          otherSub={[]}
+                          className="rounded-md p-1 hover:bg-gray-100 flex flex-col items-center"
+                        />
                       </Tooltip>
                       <Tooltip
                         title="Edit"
