@@ -35,7 +35,7 @@ export default async function CategoryTable({
               </tr>
             </thead>
             <tbody className="bg-white">
-              {categories.map((category) => (
+              {categories?.map((category) => (
                 <tr
                   key={category._id}
                   className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
@@ -108,11 +108,7 @@ export default async function CategoryTable({
                           },
                         }}
                       >
-                        <UpdateCategory
-                          parentId={category._id}
-                          subsId1=""
-                          subsId2=""
-                        />
+                        <UpdateCategory id={category._id} />
                       </Tooltip>
                       <Tooltip
                         title="Delete"
@@ -131,7 +127,7 @@ export default async function CategoryTable({
                           },
                         }}
                       >
-                        <DeleteCategory id={category._id} />
+                        <DeleteCategory id={category._id.toString()} />
                       </Tooltip>
                     </div>
                   </td>
