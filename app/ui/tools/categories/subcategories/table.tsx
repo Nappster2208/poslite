@@ -17,7 +17,6 @@ export default async function SubCategoryTable({
   currentPage: number;
 }) {
   const subs = await FetchFilteredSubCategories(id, query, currentPage);
-
   return (
     <div className="mt-6 flow-root">
       <div className="min-w-full align-middle">
@@ -91,7 +90,10 @@ export default async function SubCategoryTable({
                           },
                         }}
                       >
-                        <AddSubCategory id={sub._id} otherSub={[]} />
+                        <AddSubCategory
+                          id={sub.catId.toString()}
+                          otherSub={[]}
+                        />
                       </Tooltip>
                       <Tooltip
                         title="Edit"
@@ -111,8 +113,9 @@ export default async function SubCategoryTable({
                         }}
                       >
                         <UpdateCategory
-                          id={sub.catId}
-                          subs={[sub._id.toString(), "tes"]}
+                          id={sub.catId.toString()}
+                          sub1={sub._id.toString()}
+                          sub2=""
                         />
                       </Tooltip>
                       <Tooltip

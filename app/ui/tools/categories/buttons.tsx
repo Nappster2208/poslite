@@ -19,11 +19,19 @@ export function CreateCategory() {
   );
 }
 
-export function UpdateCategory({ id, subs }: { id: string; subs: string[] }) {
+export function UpdateCategory({
+  id,
+  sub1,
+  sub2,
+}: {
+  id: string;
+  sub1: string;
+  sub2: string;
+}) {
   let href = "";
-  if ((subs.length = 1)) {
-    href = `/dashboard/tools/categories/${id}/subcategories/${subs[0]}/edit`;
-  } else if ((subs.length = 2)) {
+  if (sub1 !== "") {
+    href = `/dashboard/tools/subcategories/${sub1}/edit`;
+  } else if (sub2 !== "") {
     // href = `/dashboard/tools/categories/subcategories/${subs[0]}/edit`;
   } else {
     href = `/dashboard/tools/categories/${id}/edit`;
