@@ -34,8 +34,8 @@ const EditCategoryForm: React.FC<{ category: any }> = ({ category }) => {
     try {
       // Call the createCategory function with the form data
       await updateCategory(_id, {
-        catName: data.catName,
-        catDesc: data.catDesc,
+        catName: data.Name,
+        catDesc: data.Description,
       });
       toast.success("Category created successfully!");
     } catch (error) {
@@ -63,9 +63,9 @@ const EditCategoryForm: React.FC<{ category: any }> = ({ category }) => {
                   defaultValue={catName}
                   className="peer block w-full cursor-text rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                   placeholder="Enter Category Name"
-                  {...register("catName")}
+                  {...register("Name")}
                 />
-                <span className="text-red-400">{errors.catName?.message}</span>
+                <span className="text-red-400">{errors.Name?.message}</span>
                 <PencilIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
               </div>
             </div>
@@ -82,9 +82,11 @@ const EditCategoryForm: React.FC<{ category: any }> = ({ category }) => {
                   defaultValue={catDesc}
                   className="peer block w-full cursor-text rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                   placeholder="Enter Category Description"
-                  {...register("catDesc")}
+                  {...register("Description")}
                 />
-                <span className="text-red-400">{errors.catDesc?.message}</span>
+                <span className="text-red-400">
+                  {errors.Description?.message}
+                </span>
                 <PencilIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
               </div>
             </div>
