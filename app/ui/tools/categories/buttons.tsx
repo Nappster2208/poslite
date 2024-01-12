@@ -20,19 +20,19 @@ export function CreateCategory() {
 }
 
 export function UpdateCategory({
-  parentId,
-  subsId1,
-  subsId2,
-}: {
-  parentId: string;
-  subsId1: string;
-  subsId2: string;
+  id,
+}: // subsId1,
+// subsId2,
+{
+  id: string;
+  // subsId1: string;
+  // subsId2: string;
 }) {
-  let href = "";
-  if (subsId1 !== "") {
-    href = `/dashboard/tools/subcategories/${parentId}/edit?subs1=${subsId1}`;
-  }
-  href = `/dashboard/tools/categories/${parentId}/edit`;
+  let href = "/dashboard/tools/categories/${id}/edit";
+  // if (subsId1 !== "") {
+  //   href = `/dashboard/tools/subcategories/${id}/edit?subs1=${subsId1}`;
+  // }
+  // href = `/dashboard/tools/categories/${id}/edit`;
   return (
     <Link
       href={href}
