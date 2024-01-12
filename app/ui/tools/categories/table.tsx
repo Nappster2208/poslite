@@ -35,9 +35,9 @@ export default async function CategoryTable({
               </tr>
             </thead>
             <tbody className="bg-white">
-              {categories?.map((category: any) => (
+              {categories.map((category) => (
                 <tr
-                  key={category.id}
+                  key={category._id}
                   className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
                 >
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
@@ -50,8 +50,8 @@ export default async function CategoryTable({
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end md:gap-3">
-                      {category.subCategory &&
-                        category.subCategory.length > 0 && (
+                      {category.subCategories &&
+                        category.subCategories.length > 0 && (
                           <Tooltip
                             title="Sub"
                             placement="bottom"
@@ -69,7 +69,7 @@ export default async function CategoryTable({
                               },
                             }}
                           >
-                            <SubCategoriesBtn id={category.id} />
+                            <SubCategoriesBtn id={category._id} />
                           </Tooltip>
                         )}
                       <Tooltip
@@ -89,7 +89,7 @@ export default async function CategoryTable({
                           },
                         }}
                       >
-                        <AddSubCategory id={category.id} otherSub={[]} />
+                        <AddSubCategory id={category._id} otherSub={[]} />
                       </Tooltip>
                       <Tooltip
                         title="Edit"
@@ -108,7 +108,11 @@ export default async function CategoryTable({
                           },
                         }}
                       >
-                        <UpdateCategory id={category.id} />
+                        <UpdateCategory
+                          parentId={category._id}
+                          subsId1=""
+                          subsId2=""
+                        />
                       </Tooltip>
                       <Tooltip
                         title="Delete"
@@ -127,7 +131,7 @@ export default async function CategoryTable({
                           },
                         }}
                       >
-                        <DeleteCategory id={category.id} />
+                        <DeleteCategory id={category._id} />
                       </Tooltip>
                     </div>
                   </td>
