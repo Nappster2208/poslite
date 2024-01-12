@@ -24,12 +24,12 @@ export default function Form() {
     try {
       // Call the createCategory function with the form data
       await createCategory({
-        catName: data.catName,
-        catDesc: data.catDesc,
+        catName: data.Name,
+        catDesc: data.Description,
       });
       toast.success("Category created successfully!");
     } catch (error) {
-      toast.success("Error creating category: " + error);
+      toast.error("Error creating category: " + error);
     }
   };
 
@@ -51,9 +51,9 @@ export default function Form() {
                   id="catName"
                   className="peer block w-full cursor-text rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                   placeholder="Enter Category Name"
-                  {...register("catName")}
+                  {...register("Name")}
                 />
-                <span className="text-red-400">{errors.catName?.message}</span>
+                <span className="text-red-400">{errors.Name?.message}</span>
                 <PencilIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
               </div>
             </div>
@@ -69,9 +69,11 @@ export default function Form() {
                   id="catDesc"
                   className="peer block w-full cursor-text rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                   placeholder="Enter Category Description"
-                  {...register("catDesc")}
+                  {...register("Description")}
                 />
-                <span className="text-red-400">{errors.catName?.message}</span>
+                <span className="text-red-400">
+                  {errors.Description?.message}
+                </span>
                 <PencilIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
               </div>
             </div>
