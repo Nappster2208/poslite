@@ -28,7 +28,7 @@ export function UpdateCategory({
   // subsId1: string;
   // subsId2: string;
 }) {
-  let href = "/dashboard/tools/categories/${id}/edit";
+  let href = `/dashboard/tools/categories/${id}/edit`;
   // if (subsId1 !== "") {
   //   href = `/dashboard/tools/subcategories/${id}/edit?subs1=${subsId1}`;
   // }
