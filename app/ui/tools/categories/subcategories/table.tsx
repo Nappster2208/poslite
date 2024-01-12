@@ -110,7 +110,10 @@ export default async function SubCategoryTable({
                           },
                         }}
                       >
-                        <UpdateCategory id={sub._id} />
+                        <UpdateCategory
+                          id={sub.catId}
+                          subs={[sub._id.toString(), "tes"]}
+                        />
                       </Tooltip>
                       <Tooltip
                         title="Delete"

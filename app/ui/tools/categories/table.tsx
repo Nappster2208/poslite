@@ -108,7 +108,7 @@ export default async function CategoryTable({
                           },
                         }}
                       >
-                        <UpdateCategory id={category._id} />
+                        <UpdateCategory id={category._id} subs={[]} />
                       </Tooltip>
                       <Tooltip
                         title="Delete"
