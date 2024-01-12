@@ -5,22 +5,9 @@ import m_categories from "./(models)/m_categories";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { NextResponse } from "next/server";
-import * as yup from "yup";
-
-const categorySchema = yup.object().shape({
-  catName: yup.string().min(3).max(20).required(),
-  catDesc: yup.string().min(3).max(100).required(),
-});
-
-interface CategoryData {
-  catName: string;
-  catDesc: string;
-}
-
-interface SubCategoryData {
-  subcatName: string;
-  subcatDesc: string;
-}
+import { categorySchema, subcategorySchema } from "./schemas";
+import { CategoryData, SubCategoryData } from "./interface";
+import m_subCategories from "./(models)/m_subCategories";
 
 export async function createCategory(formData: CategoryData) {
   try {
@@ -69,41 +56,11 @@ export async function deleteCategory(id: string) {
   }
 }
 
-export async function AddSubCategory(id: string, formData: SubCategoryData) {
-  const { subcatName, subcatDesc } = formData;
-
+export async function AddSubCategory(formData: SubCategoryData) {
   try {
     await connect();
-    const category = await m_categories.findById(id);
-
-    if (category.subCategory && category.subCategory.length > 0) {
-      await m_categories.updateOne(
-        { _id: id },
-        {
-          $push: {
-            subCategory: {
-              subcatName: subcatName,
-              subcatDesc: subcatDesc,
-              updatedAt: { $type: "date" },
-            },
-          },
-        }
-      );
-    } else {
-      await m_categories.updateOne(
-        { _id: id },
-        {
-          $set: {
-            subCategory: {
-              subcatName: subcatName,
-              subcatDesc: subcatDesc,
-              createdAt: { $type: "date" },
-              updatedAt: { $type: "date" },
-            },
-          },
-        }
-      );
-    }
+    await subcategorySchema.validate(formData, { abortEarly: false });
+    await m_subCategories.create(formData);
 
     revalidatePath("/dashboard/tools/categories");
   } catch (error) {
