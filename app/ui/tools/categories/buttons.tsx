@@ -30,7 +30,7 @@ export function UpdateCategory({
 }) {
   let href = "";
   if (sub1 !== "") {
-    href = `/dashboard/tools/subcategories/${sub1}/edit`;
+    href = `/dashboard/tools/subcategories/${sub1}/edit?catid=${id}`;
   } else if (sub2 !== "") {
     // href = `/dashboard/tools/categories/subcategories/${subs[0]}/edit`;
   } else {
@@ -62,16 +62,18 @@ export function DeleteCategory({ id }: { id: string }) {
 export function AddSubCategory({
   id,
   otherSub,
+  className,
 }: {
   id: string;
   otherSub: string[];
+  className: string;
 }) {
   const subString =
     otherSub.length > 1 ? otherSub.join(",") : otherSub[0] || "";
   return (
     <Link
       href={`/dashboard/tools/categories/${id}/subcat?sub=${subString}`}
-      className="rounded-md p-1 hover:bg-gray-100 flex flex-col items-center"
+      className={className}
     >
       <PlusIcon className="w-5" />
       <span className="sr-only">Add Sub</span>
