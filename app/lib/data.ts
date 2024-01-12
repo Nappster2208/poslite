@@ -2,6 +2,7 @@ import { unstable_noStore as noStore } from "next/cache";
 import m_categories from "./(models)/m_categories";
 import connect from "./(connection)/connection";
 import m_subCategories from "./(models)/m_subCategories";
+import { Types } from "mongoose";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -106,22 +107,28 @@ export async function FetchFilteredSubCategories(
   query: string,
   currentPage: number
 ) {
+  const catId = new Types.ObjectId(id);
   noStore();
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
     await connect();
+
     const subs = await m_subCategories
-      .find({
-        $or: [
-          { subcatName: { $regex: new RegExp(query, "i") } },
-          { subcatDesc: { $regex: new RegExp(query, "i") } },
-        ],
-      })
+      .aggregate([
+        {
+          $match: {
+            catId: catId,
+            $or: [
+              { subcatName: { $regex: new RegExp(query, "i") } },
+              { subcatDesc: { $regex: new RegExp(query, "i") } },
+            ],
+          },
+        },
+      ])
       .sort({ createdAt: -1 })
       .skip(offset)
       .limit(ITEMS_PER_PAGE);
-    console.log(subs);
     return subs;
   } catch (error) {
     console.error("Database Error:", error);
