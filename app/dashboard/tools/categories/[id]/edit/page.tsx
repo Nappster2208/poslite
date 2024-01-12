@@ -5,7 +5,7 @@ import { FetchCategoryWithId } from "@/app/lib/data";
 import Form from "@/app/ui/tools/categories/edit-form";
 
 export const metadata: Metadata = {
-  title: "Edit Invoice",
+  title: "Edit Category",
 };
 
 export default async function Page({ params }: { params: { id: string } }) {
