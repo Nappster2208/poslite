@@ -72,3 +72,20 @@ export async function AddSubCategory(formData: SubCategoryData) {
   }
   redirect("/dashboard/tools/categories");
 }
+
+export async function updateSubCategory(id: string, formData: SubCategoryData) {
+  const { catId, subcatName, subcatDesc } = formData;
+  try {
+    await connect();
+    await subcategorySchema.validate(formData, { abortEarly: false });
+    await m_subCategories.findByIdAndUpdate(id, { subcatName, subcatDesc });
+    revalidatePath(`/dashboard/tools/categories/${catId}/subcategories`);
+  } catch (error) {
+    console.error("Error updating category:", error);
+    return NextResponse.json(
+      { message: "Error updating category: ", error },
+      { status: 400 }
+    );
+  }
+  redirect(`/dashboard/tools/categories/${catId}/subcategories`);
+}
