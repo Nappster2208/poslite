@@ -19,6 +19,10 @@ export default async function Page({ params }: { params: { id: string } }) {
         breadcrumbs={[
           { label: "Categories", href: "/dashboard/tools/categories" },
           {
+            label: "Sub Category",
+            href: `/dashboard/tools/categories/${id}/subcategories`,
+          },
+          {
             label: "Add Sub Category",
             href: ``,
             active: true,
