@@ -57,12 +57,14 @@ export async function deleteCategory(id: string) {
 }
 
 export async function AddSubCategory(formData: SubCategoryData) {
+  const { catId } = formData;
   try {
     await connect();
     await subcategorySchema.validate(formData, { abortEarly: false });
     await m_subCategories.create(formData);
 
     revalidatePath("/dashboard/tools/categories");
+    revalidatePath(`/dashboard/tools/categories/${catId}/subcategories`);
   } catch (error) {
     console.error("Error updating sub category:", error);
     return NextResponse.json(
@@ -70,7 +72,8 @@ export async function AddSubCategory(formData: SubCategoryData) {
       { status: 400 }
     );
   }
-  redirect("/dashboard/tools/categories");
+  // redirect("/dashboard/tools/categories");
+  redirect(`/dashboard/tools/categories/${catId}/subcategories`);
 }
 
 export async function updateSubCategory(id: string, formData: SubCategoryData) {
