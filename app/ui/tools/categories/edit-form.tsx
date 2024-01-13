@@ -37,9 +37,9 @@ const EditCategoryForm: React.FC<{ category: any }> = ({ category }) => {
         catName: data.Name,
         catDesc: data.Description,
       });
-      toast.success("Category created successfully!");
+      toast.success("Category updated successfully!");
     } catch (error) {
-      toast.success("Error updating category: " + error);
+      toast.error("Error updating category: " + error);
     }
   };
 
@@ -49,7 +49,6 @@ const EditCategoryForm: React.FC<{ category: any }> = ({ category }) => {
         <input type="hidden" name="id" value={_id} />
         <div className="rounded-md p-4 md:p-6">
           <div className="bg-white shadow-md p-2 rounded-lg">
-            {/* Product Code */}
             <div className="mb-4">
               <label
                 htmlFor="catName"
