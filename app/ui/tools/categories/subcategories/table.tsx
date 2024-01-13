@@ -93,7 +93,7 @@ export default async function SubCategoryTable({
                       >
                         <AddSubCategory
                           id={sub.catId.toString()}
-                          otherSub={[]}
+                          otherSub={[sub._id.toString()]}
                           className="rounded-md p-1 hover:bg-gray-100 flex flex-col items-center"
                         />
                       </Tooltip>
