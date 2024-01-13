@@ -86,13 +86,16 @@ export function AddSubCategory({
   otherSub: string[];
   className: string;
 }) {
-  const subString =
-    otherSub.length > 1 ? otherSub.join(",") : otherSub[0] || "";
+  let subString = "";
+  let href = "";
+  if (otherSub.length > 0) {
+    subString = otherSub.length > 1 ? otherSub.join(",") : otherSub[0] || "";
+    href = `/dashboard/tools/categories/${otherSub[0]}/create-sub2?sub=${id}`;
+  } else {
+    href = `/dashboard/tools/categories/${id}/create-sub`;
+  }
   return (
-    <Link
-      href={`/dashboard/tools/categories/${id}/subcat?sub=${subString}`}
-      className={className}
-    >
+    <Link href={href} className={className}>
       <PlusIcon className="w-5" />
       <span className="sr-only">Add Sub</span>
     </Link>
