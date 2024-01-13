@@ -89,3 +89,17 @@ export async function updateSubCategory(id: string, formData: SubCategoryData) {
   }
   redirect(`/dashboard/tools/categories/${catId}/subcategories`);
 }
+
+export async function deleteSubCategory(id: string, catId: string) {
+  try {
+    await connect();
+    await m_subCategories.findByIdAndDelete(id);
+    revalidatePath(`/dashboard/tools/categories/${catId}/subcategories`);
+  } catch (error) {
+    console.log("Error deleting category", error);
+    return NextResponse.json(
+      { message: "Error deleting category", error },
+      { status: 400 }
+    );
+  }
+}

@@ -2,6 +2,7 @@ import { FetchFilteredSubCategories } from "@/app/lib/data";
 import {
   AddSubCategory,
   DeleteCategory,
+  DeleteSubCategory,
   SubCategoriesBtn,
   UpdateCategory,
 } from "../buttons";
@@ -136,7 +137,7 @@ export default async function SubCategoryTable({
                           },
                         }}
                       >
-                        <DeleteCategory id={sub._id.toString()} />
+                        <DeleteSubCategory id={sub._id.toString()} catId={id} />
                       </Tooltip>
                     </div>
                   </td>
