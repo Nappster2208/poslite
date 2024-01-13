@@ -1,10 +1,29 @@
 "use client";
 import Breadcrumbs from "@/app/ui/breadcrumbs";
+import Form from "@/app/ui/tools/categories/subcategories/edit-form";
 import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const page = ({ params }: { params: { id: string } }) => {
+  const id = params.id;
   const searchParams = useSearchParams();
   const catId = searchParams.get("catid");
+  const [data, setData] = useState<
+    Array<{
+      _id: string;
+      catId: string;
+      subcatName: string;
+      subcatDesc: string;
+    }>
+  >([]);
+
+  useEffect(() => {
+    fetch(`/api/subs/getwithid/${id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data);
+      });
+  }, [id]);
 
   return (
     <main>
@@ -22,7 +41,7 @@ const page = ({ params }: { params: { id: string } }) => {
           },
         ]}
       />
-      {/* <Form /> */}
+      <Form subCategory={data} />
     </main>
   );
 };
