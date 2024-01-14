@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import connect from "@/app/lib/(connection)/connection";
 import m_menu from "@/app/lib/(models)/m_menu";
 
-export const GET = async ({ request }) => {
+export const GET = async (request: Request) => {
   try {
     await connect();
     const menus = await m_menu.find();

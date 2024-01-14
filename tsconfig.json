@@ -28,7 +28,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/lib/(connection)/connection.js",
-    "app/api/menus/route.js",
+    "app/api/menus/route.ts",
     "app/api/categories/route.js",
     "app/api/hello/route.js"
   ],
