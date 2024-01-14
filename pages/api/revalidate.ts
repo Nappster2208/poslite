@@ -15,6 +15,7 @@ export default async function handler(
   // const path = req.query.path as string;
 
   await res.revalidate("/api/menus");
+  // await res.revalidate(path);
 
   return res.json(menus);
   // return res.json({ revalidated: true });

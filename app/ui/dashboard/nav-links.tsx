@@ -8,6 +8,8 @@ import { SubmenuLink } from "@/app/lib/types";
 import clsx from "clsx";
 import * as SolidIcons from "@heroicons/react/24/solid";
 import * as OutlineIcons from "@heroicons/react/24/outline";
+import axios from "axios";
+import { LoadingSpinner } from "../skeletons";
 
 interface Props {
   icon: any;
@@ -28,7 +30,7 @@ export const HeroIcon = (props: Props): JSX.Element => {
   return <Icon className={classes.join(" ")} />;
 };
 
-export default function NavLinks(secret: any) {
+export default function NavLinks() {
   const pathname = usePathname();
   const [menus, setMenus] = useState<any>(null);
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
@@ -90,15 +92,15 @@ export default function NavLinks(secret: any) {
   };
 
   useEffect(() => {
-    fetch(`/api/revalidate?secret=${secret.secret}`)
+    fetch("/api/menus")
       .then((res) => res.json())
       .then((data) => {
         setMenus(data);
         setLoading(false);
       });
-  }, [secret.secret]);
+  }, []);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <LoadingSpinner />;
   if (!menus) return <p>No profile data</p>;
   return (
     <>

@@ -1,5 +1,9 @@
-import { NextApiRequest } from "next";
-import { NextResponse } from "next/server";
-export const GET = async (request: Request) => {
-  return new NextResponse(JSON.stringify(`hello`), { status: 200 });
-};
+import m_menu from "@/app/lib/(models)/m_menu";
+import { revalidatePath } from "next/cache";
+
+export async function GET() {
+  revalidatePath("/api/hello");
+  return Response.json({
+    date: new Date().toLocaleString("en-US", { timeZone: "America/New_York" }),
+  });
+}
