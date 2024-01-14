@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 const SeacrhParams = () => {
   const catid = useSearchParams();
-  return catid.get("catid");
+  return catid?.get("catid");
 };
 
 const Page = ({ params }: { params: { id: string } }) => {

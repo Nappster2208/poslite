@@ -1,9 +1,10 @@
 import Link from "next/link";
 import NavLinks from "@/app/ui/dashboard/nav-links";
-import AcmeLogo from "@/app/ui/poslite-logo";
 import { PowerIcon } from "@heroicons/react/24/outline";
 import PosliteLogo from "@/app/ui/poslite-logo";
 // import { signOut } from '@/auth';
+
+const secretToken = process.env.MY_SECRET_TOKEN;
 
 export default function SideNav() {
   return (
@@ -17,7 +18,7 @@ export default function SideNav() {
         </div>
       </Link>
       <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
-        <NavLinks />
+        <NavLinks secret={secretToken} />
         <div className="hidden h-auto w-full grow rounded-md bg-gray-50 md:block"></div>
         <form
         //   action={async () => {

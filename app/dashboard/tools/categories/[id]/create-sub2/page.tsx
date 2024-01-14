@@ -8,7 +8,7 @@ import { toast } from "sonner";
 
 const SeacrhParams = () => {
   const sub = useSearchParams();
-  return sub.get("sub");
+  return sub?.get("sub");
 };
 
 const Page = ({ params }: { params: { id: string } }) => {

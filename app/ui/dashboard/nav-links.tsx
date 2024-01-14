@@ -28,7 +28,7 @@ export const HeroIcon = (props: Props): JSX.Element => {
   return <Icon className={classes.join(" ")} />;
 };
 
-export default function NavLinks() {
+export default function NavLinks(secret: any) {
   const pathname = usePathname();
   const [menus, setMenus] = useState<any>(null);
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
@@ -90,13 +90,13 @@ export default function NavLinks() {
   };
 
   useEffect(() => {
-    fetch("/api/menus")
+    fetch(`/api/revalidate?secret=${secret.secret}`)
       .then((res) => res.json())
       .then((data) => {
         setMenus(data);
         setLoading(false);
       });
-  }, []);
+  }, [secret.secret]);
 
   if (isLoading) return <p>Loading...</p>;
   if (!menus) return <p>No profile data</p>;

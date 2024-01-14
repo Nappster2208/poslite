@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const Form = () => {
-  const catId = useSearchParams().get("sub");
+  const catId = useSearchParams()?.get("sub");
   const [catName, setCatName] = useState("");
 
   useEffect(() => {

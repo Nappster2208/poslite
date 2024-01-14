@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 import connect from "@/app/lib/(connection)/connection";
 import m_menu from "@/app/lib/(models)/m_menu";
+import { NextApiResponse } from "next";
 
-export const GET = async (request: Request) => {
+export const GET = async (request: Request, res: NextApiResponse) => {
   try {
     await connect();
     const menus = await m_menu.find();

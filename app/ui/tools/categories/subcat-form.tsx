@@ -16,7 +16,7 @@ import { AddSubCategory } from "@/app/lib/action";
 
 const Subcat: React.FC<{ category: any }> = ({ category }) => {
   const sub = useSearchParams();
-  const subcat = sub.get("sub");
+  const subcat = sub?.get("sub");
   let splitSub: string[] = [];
 
   if (subcat && subcat.trim() !== "") {
