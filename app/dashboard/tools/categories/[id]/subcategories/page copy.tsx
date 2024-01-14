@@ -28,7 +28,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           ]}
         />
       </div>
-      <SubCategoryTable id={params.id} catName={catName} />
+      <SubCategoryTable id={params.id} query="" currentPage={1} />
     </div>
   );
 }
