@@ -26,13 +26,13 @@ export const links: Link[] = [
     name: "Tools",
     href: "",
     icon: Cog6ToothIcon,
-    submenu: [
-      {
-        name: "Categories",
-        href: "/dashboard/tools/categories",
-        icon: TagIcon,
-      },
-      { name: "Units", href: "/dashboard/tools/units", icon: ScaleIcon },
-    ],
+    // submenu: [
+    //   {
+    //     name: "Categories",
+    //     href: "/dashboard/tools/categories",
+    //     icon: TagIcon,
+    //   },
+    //   { name: "Units", href: "/dashboard/tools/units", icon: ScaleIcon },
+    // ],
   },
 ];

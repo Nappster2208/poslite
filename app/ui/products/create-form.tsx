@@ -1,6 +1,5 @@
 "use client";
 
-import { CustomerField } from "@/app/lib/schemas";
 import Link from "next/link";
 import {
   CheckIcon,

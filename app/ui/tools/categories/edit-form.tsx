@@ -26,13 +26,10 @@ const EditCategoryForm: React.FC<{ category: any }> = ({ category }) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<categorySchemaType>({
-    resolver: yupResolver(categorySchema),
-  });
+  } = useForm<categorySchemaType>({ resolver: yupResolver(categorySchema) });
 
   const onSubmit = async (data: categorySchemaType) => {
     try {
-      // Call the createCategory function with the form data
       await updateCategory(_id, {
         catName: data.Name,
         catDesc: data.Description,

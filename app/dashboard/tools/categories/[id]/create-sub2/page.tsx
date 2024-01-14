@@ -6,9 +6,13 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-const page = ({ params }: { params: { id: string } }) => {
+const SeacrhParams = () => {
   const sub = useSearchParams();
-  const catId = sub.get("sub");
+  return sub.get("sub");
+};
+
+const Page = ({ params }: { params: { id: string } }) => {
+  const catId = SeacrhParams();
   const id = params.id;
   const [data, setData] = useState<
     Array<{
@@ -48,4 +52,4 @@ const page = ({ params }: { params: { id: string } }) => {
   );
 };
 
-export default page;
+export default Page;

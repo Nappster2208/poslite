@@ -4,10 +4,14 @@ import Form from "@/app/ui/tools/categories/subcategories/edit-form";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const page = ({ params }: { params: { id: string } }) => {
+const SeacrhParams = () => {
+  const catid = useSearchParams();
+  return catid.get("catid");
+};
+
+const Page = ({ params }: { params: { id: string } }) => {
   const id = params.id;
-  const searchParams = useSearchParams();
-  const catId = searchParams.get("catid");
+  const catId = SeacrhParams();
   const [data, setData] = useState<
     Array<{
       _id: string;
@@ -46,4 +50,4 @@ const page = ({ params }: { params: { id: string } }) => {
   );
 };
 
-export default page;
+export default Page;
