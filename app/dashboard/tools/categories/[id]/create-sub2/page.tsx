@@ -1,10 +1,8 @@
 "use client";
-import { FetchSubCategoryWithId } from "@/app/lib/data";
 import Breadcrumbs from "@/app/ui/breadcrumbs";
 import Form from "@/app/ui/tools/categories/subcat2-form";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
 
 const SeacrhParams = () => {
   const sub = useSearchParams();
@@ -47,7 +45,7 @@ const Page = ({ params }: { params: { id: string } }) => {
           },
         ]}
       />
-      <Form />
+      <Form data={data} />
     </main>
   );
 };
