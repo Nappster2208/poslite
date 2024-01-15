@@ -69,7 +69,7 @@ export default async function CategoryTable({
                               },
                             }}
                           >
-                            <SubCategoriesBtn id={category._id} />
+                            <SubCategoriesBtn id={category._id} sub2={false} />
                           </Tooltip>
                         )}
                       <Tooltip
