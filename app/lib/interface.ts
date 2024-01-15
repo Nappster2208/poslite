@@ -10,3 +10,9 @@ export interface SubCategoryData {
   subcatName: string;
   subcatDesc: string;
 }
+
+export interface SubCategory2Data {
+  subcatId: Types.ObjectId;
+  subcatName: string;
+  subcatDesc: string;
+}
