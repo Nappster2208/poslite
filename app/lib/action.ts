@@ -5,9 +5,14 @@ import m_categories from "./(models)/m_categories";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { NextResponse } from "next/server";
-import { categorySchema, subcategorySchema } from "./schemas";
-import { CategoryData, SubCategoryData } from "./interface";
+import {
+  categorySchema,
+  subcategory2Schema,
+  subcategorySchema,
+} from "./schemas";
+import { CategoryData, SubCategory2Data, SubCategoryData } from "./interface";
 import m_subCategories from "./(models)/m_subCategories";
+import m_subCategories2 from "./(models)/m_subCategories2";
 
 export async function createCategory(formData: CategoryData) {
   try {
@@ -72,7 +77,6 @@ export async function AddSubCategory(formData: SubCategoryData) {
       { status: 400 }
     );
   }
-  // redirect("/dashboard/tools/categories");
   redirect(`/dashboard/tools/categories/${catId}/subcategories`);
 }
 
@@ -105,4 +109,19 @@ export async function deleteSubCategory(id: string, catId: string) {
       { status: 400 }
     );
   }
+}
+
+export async function createSub2(formData: SubCategory2Data) {
+  try {
+    await connect();
+    await subcategory2Schema.validate(formData, { abortEarly: false });
+    await m_subCategories2.create(formData);
+    // revalidatePath('');
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Error deleting category", error },
+      { status: 400 }
+    );
+  }
+  // redirect('')
 }
