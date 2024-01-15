@@ -137,9 +137,11 @@ export async function FetchFilteredSubCategories(
 export async function FetchSubCategoryWithId(id: string) {
   try {
     await connect();
-    const result = await m_subCategories.findById({ id });
+    const result = await m_subCategories.findById({ _id: id });
     return result;
-  } catch (error) {}
+  } catch (error) {
+    throw new Error("Failed to fetch filtered categories.");
+  }
 }
 
 export async function FetchFilteredSubCategories2(
@@ -173,5 +175,20 @@ export async function FetchFilteredSubCategories2(
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch filtered categories.");
+  }
+}
+
+export async function FetchSubCategory2Page(query: string, id: string) {
+  noStore();
+  try {
+    await connect();
+    const count = await m_subCategories2
+      .find({ subcatId: id })
+      .countDocuments();
+    const totalPage = Math.ceil(count / ITEMS_PER_PAGE);
+    return totalPage;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch total number of categories.");
   }
 }
