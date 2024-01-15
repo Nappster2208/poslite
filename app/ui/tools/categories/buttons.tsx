@@ -102,10 +102,16 @@ export function AddSubCategory({
   );
 }
 
-export function SubCategoriesBtn({ id }: { id: string }) {
+export function SubCategoriesBtn({ id, sub2 }: { id: string; sub2: boolean }) {
+  let href = "";
+  if (!sub2) {
+    href = `/dashboard/tools/categories/${id}/subcategories/`;
+  } else {
+    href = `/dashboard/tools/subcategories/${id}/subcategories2/`;
+  }
   return (
     <Link
-      href={`/dashboard/tools/categories/${id}/subcategories/`}
+      href={href}
       className="rounded-md p-1 hover:bg-gray-100 flex flex-col items-center"
     >
       <ArrowTopRightOnSquareIcon className="w-5" />
