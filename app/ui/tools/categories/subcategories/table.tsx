@@ -52,28 +52,27 @@ export default async function SubCategoryTable({
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end md:gap-3">
-                      {/* {sub.subCategories &&
-                        category.subCategories.length > 0 && (
-                          <Tooltip
-                            title="Sub"
-                            placement="bottom"
-                            arrow
-                            slotProps={{
-                              popper: {
-                                modifiers: [
-                                  {
-                                    name: "offset",
-                                    options: {
-                                      offset: [0, -10],
-                                    },
+                      {sub.subCategories2 && sub.subCategories2.length > 0 && (
+                        <Tooltip
+                          title="Sub"
+                          placement="bottom"
+                          arrow
+                          slotProps={{
+                            popper: {
+                              modifiers: [
+                                {
+                                  name: "offset",
+                                  options: {
+                                    offset: [0, -10],
                                   },
-                                ],
-                              },
-                            }}
-                          >
-                            <SubCategoriesBtn id={category._id} />
-                          </Tooltip>
-                        )} */}
+                                },
+                              ],
+                            },
+                          }}
+                        >
+                          <SubCategoriesBtn id={sub._id} sub2={true} />
+                        </Tooltip>
+                      )}
                       <Tooltip
                         title="Add Sub"
                         placement="bottom"
