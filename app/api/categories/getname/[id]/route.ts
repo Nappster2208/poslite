@@ -8,7 +8,6 @@ export const GET = async (request: Request) => {
   try {
     await connect();
     const data = await m_categories.findOne({ _id: id });
-    revalidatePath(`/api/categories/getname/${id}`);
     return new NextResponse(JSON.stringify(data?.catName || null), {
       status: 200,
     });
