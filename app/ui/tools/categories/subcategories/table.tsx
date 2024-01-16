@@ -119,25 +119,30 @@ export default async function SubCategoryTable({
                           sub2=""
                         />
                       </Tooltip>
-                      <Tooltip
-                        title="Delete"
-                        placement="bottom"
-                        arrow
-                        slotProps={{
-                          popper: {
-                            modifiers: [
-                              {
-                                name: "offset",
-                                options: {
-                                  offset: [0, -10],
+                      {sub.subCategories2.length === 0 && (
+                        <Tooltip
+                          title="Delete"
+                          placement="bottom"
+                          arrow
+                          slotProps={{
+                            popper: {
+                              modifiers: [
+                                {
+                                  name: "offset",
+                                  options: {
+                                    offset: [0, -10],
+                                  },
                                 },
-                              },
-                            ],
-                          },
-                        }}
-                      >
-                        <DeleteSubCategory id={sub._id.toString()} catId={id} />
-                      </Tooltip>
+                              ],
+                            },
+                          }}
+                        >
+                          <DeleteSubCategory
+                            id={sub._id.toString()}
+                            catId={id}
+                          />
+                        </Tooltip>
+                      )}
                     </div>
                   </td>
                 </tr>
