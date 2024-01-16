@@ -1,4 +1,8 @@
-import { deleteCategory, deleteSubCategory } from "@/app/lib/action";
+import {
+  deleteCategory,
+  deleteSubCategory,
+  deleteSubCategory2,
+} from "@/app/lib/action";
 import {
   ArrowTopRightOnSquareIcon,
   PencilIcon,
@@ -67,6 +71,19 @@ export function DeleteSubCategory({
   catId: string;
 }) {
   const deleteWithId = deleteSubCategory.bind(null, id, catId);
+
+  return (
+    <form action={deleteWithId}>
+      <button className="rounded-md p-1 hover:bg-gray-100 flex flex-col items-center">
+        <TrashIcon className="w-5" />
+        <span className="sr-only">Delete</span>
+      </button>
+    </form>
+  );
+}
+
+export function DeleteSubCategory2({ id }: { id: string }) {
+  const deleteWithId = deleteSubCategory2.bind(null, id);
 
   return (
     <form action={deleteWithId}>

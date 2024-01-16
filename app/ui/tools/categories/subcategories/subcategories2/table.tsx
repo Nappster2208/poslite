@@ -1,6 +1,6 @@
 import { FetchFilteredSubCategories2 } from "@/app/lib/data";
 import { Tooltip } from "@mui/material";
-import { DeleteCategory, UpdateCategory } from "../../buttons";
+import { DeleteSubCategory2, UpdateCategory } from "../../buttons";
 
 const SubCategory2Table = async ({
   id,
@@ -86,7 +86,7 @@ const SubCategory2Table = async ({
                           },
                         }}
                       >
-                        <DeleteCategory id={item._id.toString()} />
+                        <DeleteSubCategory2 id={item._id.toString()} />
                       </Tooltip>
                     </div>
                   </td>

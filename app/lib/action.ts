@@ -2,7 +2,7 @@
 
 import connect from "./(connection)/connection";
 import m_categories from "./(models)/m_categories";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { NextResponse } from "next/server";
 import {
@@ -111,12 +111,28 @@ export async function deleteSubCategory(id: string, catId: string) {
   }
 }
 
+export async function deleteSubCategory2(id: string) {
+  try {
+    await connect();
+    await m_subCategories2.findByIdAndDelete(id);
+    revalidateTag("r_subcategories");
+    revalidateTag("r_subcategories2");
+  } catch (error) {
+    console.log("Error deleting category", error);
+    return NextResponse.json(
+      { message: "Error deleting category", error },
+      { status: 400 }
+    );
+  }
+}
+
 export async function createSub2(formData: SubCategory2Data) {
   try {
     await connect();
     await subcategory2Schema.validate(formData, { abortEarly: false });
     await m_subCategories2.create(formData);
-    // revalidatePath('');
+    revalidateTag("r_subcategories");
+    revalidateTag("r_subcategories2");
   } catch (error) {
     return NextResponse.json(
       { message: "Error deleting category", error },
