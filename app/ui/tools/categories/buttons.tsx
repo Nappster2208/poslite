@@ -67,6 +67,7 @@ export function DeleteSubCategory({
   catId: string;
 }) {
   const deleteWithId = deleteSubCategory.bind(null, id, catId);
+
   return (
     <form action={deleteWithId}>
       <button className="rounded-md p-1 hover:bg-gray-100 flex flex-col items-center">

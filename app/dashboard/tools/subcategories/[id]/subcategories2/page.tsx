@@ -61,7 +61,11 @@ const Page = async ({
         <Search placeholder="Search sub category..." />
       </div>
       <Suspense key={query + currentPage} fallback={<TableSkeleton />}>
-        <SubCategory2Table />
+        <SubCategory2Table
+          id={params.id}
+          query={query}
+          currentPage={currentPage}
+        />
       </Suspense>
     </div>
   );
