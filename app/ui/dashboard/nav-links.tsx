@@ -8,7 +8,6 @@ import { SubmenuLink } from "@/app/lib/types";
 import clsx from "clsx";
 import * as SolidIcons from "@heroicons/react/24/solid";
 import * as OutlineIcons from "@heroicons/react/24/outline";
-import axios from "axios";
 import { LoadingSpinner } from "../skeletons";
 
 interface Props {
