@@ -139,5 +139,7 @@ export async function createSub2(formData: SubCategory2Data) {
       { status: 400 }
     );
   }
-  // redirect('')
+  redirect(
+    `/dashboard/tools/subcategories/${formData.subcatId}/subcategories2/`
+  );
 }
