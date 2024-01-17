@@ -39,7 +39,6 @@ const Form = ({ data }: { data: any }) => {
 
   const onSubmit = async (data: subcategorySchemaType) => {
     try {
-      // Call the createCategory function with the form data
       await createSub2({
         subcatId: _id.toString(),
         subcatName: data.Name,
