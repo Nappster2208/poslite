@@ -33,10 +33,10 @@ export function UpdateCategory({
   sub2: string;
 }) {
   let href = "";
-  if (sub1 !== "") {
+  if (sub1 !== "" && sub2 === "") {
     href = `/dashboard/tools/subcategories/${sub1}/edit?catid=${id}`;
   } else if (sub2 !== "") {
-    // href = `/dashboard/tools/categories/subcategories/${subs[0]}/edit`;
+    href = `/dashboard/tools/subcategories2/${sub2}/edit?subcatid=${sub1}`;
   } else {
     href = `/dashboard/tools/categories/${id}/edit`;
   }
