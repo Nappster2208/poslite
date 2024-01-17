@@ -33,9 +33,9 @@ const Page = ({ params }: { params: { id: string } }) => {
     <main>
       <Breadcrumbs
         breadcrumbs={[
-          { label: "Categories", href: "/dashboard/tools/categories" },
+          { label: "Kategori", href: "/dashboard/tools/categories" },
           {
-            label: "Sub Category",
+            label: "Sub Kategori",
             href: `/dashboard/tools/categories/${catId}/subcategories`,
           },
           {

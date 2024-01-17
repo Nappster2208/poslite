@@ -6,9 +6,9 @@ const page = () => {
     <main>
       <Breadcrumbs
         breadcrumbs={[
-          { label: "Categories", href: "/dashboard/tools/categories" },
+          { label: "Kategori", href: "/dashboard/tools/categories" },
           {
-            label: "Create Category",
+            label: "Tambah",
             href: "/dashboard/tools/categories/create",
             active: true,
           },

@@ -51,7 +51,7 @@ const Subcat: React.FC<{ category: any }> = ({ category }) => {
   return (
     <>
       <nav className="block">
-        <ol className={clsx(lusitana.className, "flex text-xl md:text-2xl")}>
+        <ol className={clsx(lusitana.className, "flex text-lg md:text-xl")}>
           <span className="mx-1 inline-block">{catName}</span>
           {splitSub.length >= 1 && (
             <span className="mx-1 inline-block">{">"}</span>
@@ -117,7 +117,7 @@ const Subcat: React.FC<{ category: any }> = ({ category }) => {
 
         <div className="mt-6 flex justify-end gap-4">
           <Link
-            href="/dashboard/tools/categories"
+            href={`/dashboard/tools/categories/${_id}/subcategories`}
             className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
           >
             Cancel

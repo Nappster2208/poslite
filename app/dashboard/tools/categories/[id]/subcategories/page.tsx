@@ -31,9 +31,9 @@ export default async function Page({
       <div className="flex w-full items-center justify-between">
         <Breadcrumbs
           breadcrumbs={[
-            { label: "Categories", href: "/dashboard/tools/categories" },
+            { label: "Kategori", href: "/dashboard/tools/categories" },
             {
-              label: "Sub Category",
+              label: "Sub Kategori",
               href: "",
               active: true,
             },
@@ -44,7 +44,7 @@ export default async function Page({
         {category?.map((item) => (
           <span
             key={item._id}
-            className={clsx(lusitana.className, "flex text-xl md:text-2xl")}
+            className={clsx(lusitana.className, "flex text-lg md:text-xl")}
           >
             {item.catName}
           </span>

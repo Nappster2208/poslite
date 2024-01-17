@@ -1,6 +1,6 @@
 import { lusitana } from "@/app/ui/fonts";
-import { CreateProduct } from "@/app/ui/products/buttons";
-import Table from "@/app/ui/products/table";
+import { CreateProduct } from "@/app/ui/master/products/buttons";
+import Table from "@/app/ui/master/products/table";
 import Search from "@/app/ui/search";
 import { Metadata } from "next";
 
