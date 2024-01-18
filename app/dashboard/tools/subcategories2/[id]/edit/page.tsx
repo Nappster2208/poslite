@@ -1,56 +1,31 @@
-"use client";
+import { FetchSubCategory2 } from "@/app/lib/data";
 import Breadcrumbs from "@/app/ui/breadcrumbs";
 import Form from "@/app/ui/tools/categories/subcategories/subcategories2/edit-form";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
-const SearchParams = () => {
-  let sub = useSearchParams();
-  return sub.get("subcatid");
-};
-
-const Page = ({ params }: { params: { id: string } }) => {
+const Page = async ({ params }: { params: { id: string } }) => {
+  const data = await FetchSubCategory2(params.id);
+  console.log(data);
   let catId = "";
-  const subcatId = SearchParams();
-  const id = params.id;
-  const [data, setData] = useState<
-    Array<{
-      _id: string;
-      subcatId: string;
-      subcatName: string;
-      subcatDesc: string;
-      subs: Array<{ catId: string }>;
-    }>
-  >([]);
-
-  useEffect(() => {
-    fetch(`/api/subs2/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data);
-      });
-  }, [id]);
-
-  {
-    data.map((item) => {
-      item.subs.map((sub) => {
-        catId = sub.catId;
-      });
+  data.map((item: any) => {
+    item.subs.map((sub: any) => {
+      catId = sub.catId;
+      console.log(catId);
     });
-  }
-
+  });
   return (
     <main>
-      <Breadcrumbs
+      {/* <Breadcrumbs
         breadcrumbs={[
           { label: "Kategori", href: "/dashboard/tools/categories" },
           {
             label: "Sub Kategori",
-            href: `/dashboard/tools/categories/${catId}/subcategories`,
+            href: ``,
+            // href: `/dashboard/tools/categories/${data2.catId}/subcategories`,
           },
           {
             label: "Sub Kategori 2",
-            href: `/dashboard/tools/subcategories/${subcatId}/subcategories2`,
+            href: ``,
+            // href: `/dashboard/tools/subcategories/${subcatId}/subcategories2`,
           },
           {
             label: "Edit",
@@ -58,10 +33,7 @@ const Page = ({ params }: { params: { id: string } }) => {
             active: true,
           },
         ]}
-      />
-
-      <div></div>
-      <Form data={data} />
+      /> */}
     </main>
   );
 };

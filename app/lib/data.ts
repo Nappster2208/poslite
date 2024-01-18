@@ -4,6 +4,7 @@ import connect from "./(connection)/connection";
 import m_subCategories from "./(models)/m_subCategories";
 import { Types } from "mongoose";
 import m_subCategories2 from "./(models)/m_subCategories2";
+import { NextResponse } from "next/server";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -190,5 +191,44 @@ export async function FetchSubCategory2Page(query: string, id: string) {
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch total number of categories.");
+  }
+}
+
+export async function FetchSubCategory2(id: string) {
+  const _id = new Types.ObjectId(id);
+  try {
+    const data = await m_subCategories2.aggregate([
+      {
+        $match: { _id: _id },
+      },
+      {
+        $lookup: {
+          from: "r_subcategories",
+          localField: "subcatId",
+          foreignField: "_id",
+          as: "subs",
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          subcatId: 1,
+          subcatName: 1,
+          subcatDesc: 1,
+          subs: {
+            $map: {
+              input: "$subs",
+              as: "sub",
+              in: {
+                catId: "$$sub.catId",
+              },
+            },
+          },
+        },
+      },
+    ]);
+    return data;
+  } catch (error) {
+    throw new Error("Failed to fetch total number of categories. " + error);
   }
 }
