@@ -64,7 +64,7 @@ export function AddInput() {
                 htmlFor={`qty-${input.id}`}
                 className="mb-2 block text-sm font-medium"
               >
-                Qty{input.id}
+                Qty {input.id}
               </label>
               <div className="relative w-full">
                 <input
@@ -88,7 +88,7 @@ export function AddInput() {
                 htmlFor={`unit-${input.id}`}
                 className="mb-2 block text-sm font-medium"
               >
-                Unit{input.id}
+                Satuan Unit {input.id}
               </label>
               <div className="relative w-full">
                 <select
@@ -101,7 +101,7 @@ export function AddInput() {
                   className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 >
                   <option value="" disabled>
-                    Select a Unit
+                    Pilih Satuan Unit
                   </option>
                   <option value="PCS">PCS</option>
                   <option value="LSN">LSN</option>
@@ -113,7 +113,7 @@ export function AddInput() {
                 htmlFor={`price-${input.id}`}
                 className="mb-2 block text-sm font-medium"
               >
-                Price{input.id}
+                Harga Jual {input.id}
               </label>
               <div className="relative w-full">
                 <input
@@ -152,7 +152,7 @@ export function AddInput() {
             className="ml-2 rounded-full bg-blue-500 hover:bg-blue-600 px-3 py-1.5 text-xs font-medium text-white"
             endIcon={<Add />}
           >
-            <span>Add more prices</span>
+            <span>Tambah Harga Lain</span>
           </Button>
         )}
       </div>

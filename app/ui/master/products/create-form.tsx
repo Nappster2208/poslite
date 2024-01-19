@@ -30,7 +30,7 @@ export default function Form() {
               htmlFor="productCode"
               className="mb-2 block text-sm font-medium"
             >
-              Code
+              Kode
             </label>
             <div className="relative">
               <input
@@ -43,7 +43,7 @@ export default function Form() {
               ></input>
               <QrCodeIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
             </div>
-            <Button>Generate Code</Button>
+            <Button>Buat Kode Otomatis</Button>
           </div>
 
           {/* Product Barcode */}
@@ -109,7 +109,7 @@ export default function Form() {
                 htmlFor="productName"
                 className="mb-2 block text-sm font-medium"
               >
-                Name
+                Nama Produk
               </label>
               <div className="relative">
                 <input
@@ -130,7 +130,7 @@ export default function Form() {
                 htmlFor="productDescription"
                 className="mb-2 block text-sm font-medium"
               >
-                Description
+                Deskripsi
               </label>
               <div className="relative">
                 <textarea
@@ -153,7 +153,7 @@ export default function Form() {
                 htmlFor="productCategories"
                 className="mb-2 block text-sm font-medium"
               >
-                Category
+                Kategori
               </label>
               <div className="relative mt-2 rounded-md">
                 <div className="flex w-full">
@@ -165,7 +165,7 @@ export default function Form() {
                     className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                   >
                     <option value="" disabled>
-                      Select a Category
+                      Pilih Kategori
                     </option>
                     <option value="Food">Food</option>
                     <option value="Nonfood">Non Food</option>
@@ -184,7 +184,7 @@ export default function Form() {
               htmlFor="purchasePrice"
               className="mb-2 block text-sm font-medium"
             >
-              Purchase Price
+              Harga Beli
             </label>
             <div className="relative">
               <input
@@ -216,7 +216,7 @@ export default function Form() {
               htmlFor="productStock"
               className="mb-2 block text-sm font-medium"
             >
-              Stock of goods
+              Stok
             </label>
             <div className="relative mt-2 rounded-md">
               <div className="relative">
@@ -238,7 +238,7 @@ export default function Form() {
           {/* Product Status */}
           <fieldset>
             <legend className="mb-2 block text-sm font-medium">
-              Set the product status
+              Status Produk
             </legend>
             <div className="rounded-md border border-gray-200 bg-white px-[14px] py-3">
               <div className="flex gap-4">
@@ -288,7 +288,7 @@ export default function Form() {
       </div>
       <div className="mt-6 flex justify-end gap-4">
         <Link
-          href="/dashboard/products"
+          href="/dashboard/master/products"
           className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
         >
           Cancel
