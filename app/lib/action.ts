@@ -143,3 +143,21 @@ export async function createSub2(formData: SubCategory2Data) {
     `/dashboard/tools/subcategories/${formData.subcatId}/subcategories2/`
   );
 }
+
+export async function updateSubCategory2(
+  id: string,
+  formData: SubCategory2Data
+) {
+  const { subcatId, subcatName, subcatDesc } = formData;
+  try {
+    await connect();
+    await m_subCategories2.findByIdAndUpdate(id, { subcatName, subcatDesc });
+    revalidatePath(`/dashboard/tools/subcategories/${subcatId}/subcategories2`);
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Error updating sub category", error },
+      { status: 400 }
+    );
+  }
+  redirect(`/dashboard/tools/subcategories/${subcatId}/subcategories2`);
+}

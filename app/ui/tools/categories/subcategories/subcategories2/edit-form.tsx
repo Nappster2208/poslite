@@ -1,4 +1,5 @@
 "use client";
+import { updateSubCategory2 } from "@/app/lib/action";
 import { Buttons } from "@/app/ui/button";
 import {
   subcategorySchema,
@@ -7,12 +8,13 @@ import {
 import { PencilIcon } from "@heroicons/react/24/outline";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-const Form: React.FC<{ data: any }> = ({ data }) => {
-  const { _id, subcatId, subcatName, subcatDesc } = data;
+const Form = ({ data }: { data: any }) => {
+  const firstItem = data && data.length > 0 ? data[0] : {};
+  const { _id, subcatId, subcatName = "", subcatDesc = "" } = firstItem;
 
   const {
     register,
@@ -23,18 +25,18 @@ const Form: React.FC<{ data: any }> = ({ data }) => {
     resolver: yupResolver(subcategorySchema),
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     setValue("Name", subcatName);
     setValue("Description", subcatDesc);
   }, [subcatName, subcatDesc, setValue]);
 
   const onSubmit = async (data: subcategorySchemaType) => {
     try {
-      //   await updateSubCategory(_id, {
-      //     catId: catId,
-      //     subcatName: data.Name,
-      //     subcatDesc: data.Description,
-      //   });
+      await updateSubCategory2(_id, {
+        subcatId: subcatId,
+        subcatName: data.Name,
+        subcatDesc: data.Description,
+      });
       toast.success("Sub Category updated successfully!");
     } catch (error) {
       toast.error("Error updating sub category: " + error);
