@@ -20,10 +20,10 @@ const SubCategory2Table = async ({
             <thead className="rounded-lg text-left text-sm font-normal">
               <tr>
                 <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
-                  Name
+                  Nama
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
-                  Description
+                  Deskripsi
                 </th>
                 <th scope="col" className="relative py-3 pl-6 pr-3">
                   <span className="sr-only">Action</span>
