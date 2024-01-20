@@ -11,7 +11,7 @@ export default function SideNav() {
         className="mb-2 flex h-20 items-end justify-start rounded-md bg-gradient-to-r from-cyan-500 to-blue-500 p-4 md:h-40"
         href="/dashboard"
       >
-        <div className=" text-white md:w-40">
+        <div className="text-white md:w-40">
           <PosliteLogo />
         </div>
       </Link>
