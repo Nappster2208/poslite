@@ -1,6 +1,10 @@
 import { lusitana } from "@/app/ui/fonts";
+import { CreateSupplier } from "@/app/ui/master/supplier/button";
+import Table from "@/app/ui/master/supplier/table";
 import Search from "@/app/ui/search";
+import { TableSkeleton } from "@/app/ui/skeletons";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Supplier",
@@ -22,9 +26,11 @@ export default function Page({
       </div>
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
         <Search placeholder="Search supplier..." />
-        {/* <CreateProduct /> */}
+        <CreateSupplier />
       </div>
-      {/* <Table query={query} currentPage={currentPage} /> */}
+      <Suspense key={query + currentPage} fallback={<TableSkeleton />}>
+        <Table query={query} currentPage={currentPage} />
+      </Suspense>
       <div className="mt-5 flex w-full justify-center">
         {/* <Pagination totalPages={totalPages} /> */}
       </div>
