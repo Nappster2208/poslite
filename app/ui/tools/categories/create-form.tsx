@@ -38,7 +38,6 @@ export default function Form() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="rounded-md p-4 md:p-6">
           <div className="bg-white shadow-md p-2 rounded-lg">
-            {/* Product Code */}
             <div className="mb-4">
               <label
                 htmlFor="catName"
