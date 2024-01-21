@@ -1,9 +1,17 @@
+"use client";
 import { PaperClipIcon, PencilIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { Buttons } from "../../button";
 import Image from "next/image";
+import { ChangeEvent, useState } from "react";
 
 const Form = () => {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] ?? null;
+    setSelectedFile(file);
+  };
   return (
     <>
       {/* <form onSubmit={handleSubmit(onSubmit)}> */}
@@ -50,18 +58,32 @@ const Form = () => {
             </div>
             <div className="mb-4">
               <label htmlFor="name" className="mb-2 block text-sm font-medium">
-                Image
+                Foto/Logo
               </label>
-              <div>
-                {/* <Image /> */}
-                <div className="relative">
-                  <input
-                    id="image"
-                    className="peer block w-full cursor-text rounded-md py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                    type="file"
-                    //   {...register("Description")}
-                  />
-                  <PaperClipIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
+              <div className="box-border flex items-center w-full h-[50vh] md:h-[60vh] bg-[#e9f3fe] justify-center">
+                <div className="w-[450px] m-auto p-8 bg-white rounded-[25px] shadow-[7px_20px_20px_rgb(210,227,244)]">
+                  <label
+                    htmlFor="upload-input"
+                    className="text-center border-[3px] border-[rgb(210,227,244)] border-dashed p-6 flex flex-col items-center cursor-pointer"
+                  >
+                    <Image
+                      src="/icons/cloud-computing.png"
+                      alt="upload icon image"
+                      width={100}
+                      height={100}
+                    />
+                    <h3 className="font-bold text-lg">Klik box untuk upload</h3>
+                    <p className="text-sm mt-[10px] text-[#bbcada]">
+                      Max ukuran file 10 mb
+                    </p>
+                    <input
+                      id="upload-input"
+                      type="file"
+                      className="hidden"
+                      onChange={handleFileChange}
+                      accept=".png, .jpg, .jpeg"
+                    />
+                  </label>
                 </div>
               </div>
             </div>
