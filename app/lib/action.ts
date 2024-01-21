@@ -13,6 +13,8 @@ import {
 import { CategoryData, SubCategory2Data, SubCategoryData } from "./interface";
 import m_subCategories from "./(models)/m_subCategories";
 import m_subCategories2 from "./(models)/m_subCategories2";
+import path from "path";
+import fs from "fs/promises";
 
 export async function createCategory(formData: CategoryData) {
   try {
@@ -151,6 +153,7 @@ export async function updateSubCategory2(
   const { subcatId, subcatName, subcatDesc } = formData;
   try {
     await connect();
+    await subcategory2Schema.validate(formData, { abortEarly: false });
     await m_subCategories2.findByIdAndUpdate(id, { subcatName, subcatDesc });
     revalidatePath(`/dashboard/tools/subcategories/${subcatId}/subcategories2`);
   } catch (error) {
@@ -160,4 +163,28 @@ export async function updateSubCategory2(
     );
   }
   redirect(`/dashboard/tools/subcategories/${subcatId}/subcategories2`);
+}
+
+export async function addSupplier(formData: FormData) {
+  const imgFile = formData.get("upload-input") as File;
+  let uploadDir = "";
+
+  if (imgFile.name !== "undefined") {
+    try {
+      uploadDir = path.join(process.cwd(), "/public/supplier");
+
+      await fs.mkdir(uploadDir, { recursive: true });
+
+      const fileName = `${Date.now()}-${imgFile.name}`;
+
+      const filePath = path.join(uploadDir, fileName);
+
+      // Baca data dari file dan simpan ke sistem file
+      const fileBuffer = await imgFile.arrayBuffer();
+      await fs.writeFile(filePath, Buffer.from(fileBuffer));
+    } catch (error) {
+      console.error("Error saving file:", error);
+      throw new Error("Failed to save file");
+    }
+  }
 }

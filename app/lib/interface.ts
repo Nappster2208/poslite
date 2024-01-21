@@ -16,3 +16,8 @@ export interface SubCategory2Data {
   subcatName: string;
   subcatDesc: string;
 }
+
+export interface SupplierData {
+  code: string;
+  name: string;
+}
