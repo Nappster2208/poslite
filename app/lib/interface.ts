@@ -20,8 +20,8 @@ export interface SubCategory2Data {
 export interface SupplierData {
   code: string;
   name: string;
-  logo: File;
-  address: string;
-  email: string;
-  telp: string | number;
+  // logo: File | null;
+  // address: string;
+  // email: string | null;
+  // telp: string | number | null;
 }

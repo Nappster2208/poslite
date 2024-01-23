@@ -12,14 +12,19 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { supplierSchema, supplierSchemaType } from "@/app/lib/schemas";
 import { toast } from "sonner";
+import { validateFile } from "@/app/lib/fileValidation";
 
 const Form = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [selectedName, setSelectedName] = useState<String | undefined>("");
   const [selectedImageURL, setSelectedImageURL] = useState<string | null>(null);
+  // const [fileValidationError, setFileValidationError] = useState<string | null>(
+  //   null
+  // );
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] ?? null;
+    // const validationError = validateFile(file);
 
     if (file) {
       const imageUrl = URL.createObjectURL(file);
@@ -27,6 +32,7 @@ const Form = () => {
       setSelectedFile(file);
       setSelectedName(file?.name);
     } else {
+      // setFileValidationError(validationError);
       setSelectedImageURL(null);
       setSelectedFile(null);
       setSelectedName(undefined);
@@ -48,10 +54,10 @@ const Form = () => {
       await addSupplier({
         code: data.code,
         name: data.name,
-        logo: data.logo || null || undefined,
-        address: data.address,
-        email: data.email,
-        telp: data.telp,
+        logo: data.logo,
+        // address: data.address,
+        // email: data.email || null,
+        // telp: data.telp || null,
       });
       toast.success("Supplier created successfully!");
     } catch (error) {
@@ -73,9 +79,9 @@ const Form = () => {
                   id="code"
                   className="peer block w-full cursor-text rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                   placeholder="Kode harus unik"
-                  //   {...register("Name")}
+                  {...register("code")}
                 />
-                {/* <span className="text-red-400">{errors.Name?.message}</span> */}
+                <span className="text-red-400">{errors.code?.message}</span>
                 <PencilIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
               </div>
               <button
@@ -94,11 +100,9 @@ const Form = () => {
                   id="name"
                   className="peer block w-full cursor-text rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                   placeholder="Masukkan Nama Supplier"
-                  //   {...register("Description")}
+                  {...register("name")}
                 />
-                <span className="text-red-400">
-                  {/* {errors.Description?.message} */}
-                </span>
+                <span className="text-red-400">{errors.name?.message}</span>
                 <PencilIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
               </div>
             </div>
@@ -128,12 +132,13 @@ const Form = () => {
                     </p>
                     <input
                       id="upload-input"
-                      name="upload-input"
                       type="file"
                       className="hidden"
-                      onChange={handleFileChange}
                       accept=".png, .jpg, .jpeg"
+                      {...register("logo")}
+                      onChange={handleFileChange}
                     />
+                    <span className="text-red-400">{errors.logo?.message}</span>
                   </label>
                   <div
                     className={clsx("flex mt-2", {
@@ -168,9 +173,6 @@ const Form = () => {
                   placeholder="Masukkan Alamat Supplier"
                   //   {...register("Description")}
                 />
-                <span className="text-red-400">
-                  {/* {errors.Description?.message} */}
-                </span>
                 <WarehouseOutlined className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
               </div>
             </div>
