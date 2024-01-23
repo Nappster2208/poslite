@@ -1,3 +1,4 @@
+import { supplierSchema } from "@/app/lib/schemas";
 import * as yup from "yup";
 
 export const categorySchema = yup

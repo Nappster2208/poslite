@@ -7,6 +7,11 @@ import { ChangeEvent, useState } from "react";
 import clsx from "clsx";
 import { EmailOutlined, WarehouseOutlined } from "@mui/icons-material";
 import { addSupplier } from "@/app/lib/action";
+import { useForm } from "react-hook-form";
+
+import { yupResolver } from "@hookform/resolvers/yup";
+import { supplierSchema, supplierSchemaType } from "@/app/lib/schemas";
+import { toast } from "sonner";
 
 const Form = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -30,10 +35,33 @@ const Form = () => {
 
   const altText = selectedFile ? `Selected Image: ${selectedName}` : "";
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<supplierSchemaType>({
+    resolver: yupResolver(supplierSchema),
+  });
+
+  const onSubmit = async (data: supplierSchemaType) => {
+    try {
+      await addSupplier({
+        code: data.code,
+        name: data.name,
+        logo: data.logo || null || undefined,
+        address: data.address,
+        email: data.email,
+        telp: data.telp,
+      });
+      toast.success("Supplier created successfully!");
+    } catch (error) {
+      toast.error("Error creating Supplier: " + error);
+    }
+  };
   return (
     <>
-      {/* <form onSubmit={handleSubmit(onSubmit)}> */}
-      <form action={addSupplier}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {/* <form action={addSupplier}> */}
         <div className="rounded-md p-4 md:p-6">
           <div className="bg-white shadow-md p-2 rounded-lg">
             <div className="mb-4">
