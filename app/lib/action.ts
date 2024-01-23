@@ -173,40 +173,52 @@ export async function updateSubCategory2(
   redirect(`/dashboard/tools/subcategories/${subcatId}/subcategories2`);
 }
 
-export async function addSupplier(formData: supplierSchemaType) {
-  const { logo } = formData;
+export async function addSupplier(
+  formData: FormData,
+  schemaData: supplierSchemaType
+) {
+  const logo = formData.get("logo") as File;
+
   let uploadDir = "";
-  console.log(logo);
+  let filePath = "";
 
-  // if (!logo) {
-  //   try {
-  //     uploadDir = path.join(process.cwd(), "/public/supplier");
+  if (logo !== null) {
+    try {
+      uploadDir = path.join(process.cwd(), "/public/supplier/");
 
-  //     await fs.mkdir(uploadDir, { recursive: true });
+      await fs.mkdir(uploadDir, { recursive: true });
 
-  //     const fileName = `${Date.now()}-${logo.name}`;
+      const fileName = `${Date.now()}-${logo.name}`;
 
-  //     const filePath = path.join(uploadDir, fileName);
+      filePath = path.join(uploadDir, fileName);
 
-  //     // Baca data dari file dan simpan ke sistem file
-  //     const fileBuffer = await logo.arrayBuffer();
-  //     await fs.writeFile(filePath, Buffer.from(fileBuffer));
-  //   } catch (error) {
-  //     console.error("Error saving file:", error);
-  //     throw new Error("Failed to save file");
-  //   }
-  // }
+      // Baca data dari file dan simpan ke sistem file
+      const fileBuffer = await logo.arrayBuffer();
+      await fs.writeFile(filePath, Buffer.from(fileBuffer));
+    } catch (error) {
+      console.error("Error saving file:", error);
+      throw new Error("Failed to save file");
+    }
+  }
 
-  // try {
-  //   await connect();
-  //   await supplierSchema.validate(formData, { abortEarly: false });
-  //   await m_supplier.create(formData);
-  //   revalidatePath("/dashboard/master/supplier/");
-  // } catch (error) {
-  //   return NextResponse.json(
-  //     { message: "Error creating supplier", error },
-  //     { status: 400 }
-  //   );
-  // }
-  // redirect("/dashboard/master/supplier/");
+  try {
+    await connect();
+    const myData = {
+      ...schemaData,
+      logo: {
+        fileName: logo?.name,
+        filePath: filePath,
+      },
+    };
+    console.log(myData);
+    await supplierSchema.validate(myData, { abortEarly: false });
+    await m_supplier.create(myData);
+    revalidatePath("/dashboard/master/supplier/");
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Error creating supplier", error },
+      { status: 400 }
+    );
+  }
+  redirect("/dashboard/master/supplier/");
 }
