@@ -33,5 +33,5 @@ const supplierSchema = new Schema(
   { timestamps: true }
 );
 
-export default mongoose.models.supplierSchema ||
+export default mongoose.models.supplier ||
   mongoose.model("supplier", supplierSchema);
