@@ -7,24 +7,18 @@ import { ChangeEvent, useState } from "react";
 import clsx from "clsx";
 import { EmailOutlined, WarehouseOutlined } from "@mui/icons-material";
 import { addSupplier } from "@/app/lib/action";
+import { toast } from "sonner";
 import { useForm } from "react-hook-form";
-
 import { yupResolver } from "@hookform/resolvers/yup";
 import { supplierSchema, supplierSchemaType } from "@/app/lib/schemas";
-import { toast } from "sonner";
-import { validateFile } from "@/app/lib/fileValidation";
 
 const Form = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [selectedName, setSelectedName] = useState<String | undefined>("");
   const [selectedImageURL, setSelectedImageURL] = useState<string | null>(null);
-  // const [fileValidationError, setFileValidationError] = useState<string | null>(
-  //   null
-  // );
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] ?? null;
-    // const validationError = validateFile(file);
 
     if (file) {
       const imageUrl = URL.createObjectURL(file);
@@ -32,7 +26,6 @@ const Form = () => {
       setSelectedFile(file);
       setSelectedName(file?.name);
     } else {
-      // setFileValidationError(validationError);
       setSelectedImageURL(null);
       setSelectedFile(null);
       setSelectedName(undefined);
@@ -51,19 +44,24 @@ const Form = () => {
 
   const onSubmit = async (data: supplierSchemaType) => {
     try {
-      await addSupplier({
+      const formData = new FormData();
+
+      if (selectedFile) {
+        formData.append("logo", selectedFile);
+      }
+      await addSupplier(formData, {
         code: data.code,
         name: data.name,
-        logo: data.logo,
-        // address: data.address,
-        // email: data.email || null,
-        // telp: data.telp || null,
+        address: data.address,
+        email: data.email,
+        telp: data.telp,
       });
-      toast.success("Supplier created successfully!");
+      toast.success("Category created successfully!");
     } catch (error) {
-      toast.error("Error creating Supplier: " + error);
+      toast.error("Error creating category: " + error);
     }
   };
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -81,8 +79,8 @@ const Form = () => {
                   placeholder="Kode harus unik"
                   {...register("code")}
                 />
-                <span className="text-red-400">{errors.code?.message}</span>
                 <PencilIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
+                <p className="text-red-400">{errors.code?.message}</p>
               </div>
               <button
                 type="button"
@@ -102,8 +100,8 @@ const Form = () => {
                   placeholder="Masukkan Nama Supplier"
                   {...register("name")}
                 />
-                <span className="text-red-400">{errors.name?.message}</span>
                 <PencilIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
+                <p className="text-red-400">{errors.name?.message}</p>
               </div>
             </div>
             <div className="mb-4">
@@ -113,7 +111,7 @@ const Form = () => {
               <div className="rounded-lg box-border flex items-center w-full h-[50vh] md:h-[60vh] bg-[#e9f3fe] justify-center">
                 <div className="w-[450px] m-auto p-8 bg-white rounded-[25px] shadow-[7px_20px_20px_rgb(210,227,244)]">
                   <label
-                    htmlFor="upload-input"
+                    htmlFor="logo"
                     className="text-center border-[3px] border-[rgb(210,227,244)] border-dashed p-6 flex flex-col items-center cursor-pointer"
                   >
                     <Image
@@ -127,18 +125,14 @@ const Form = () => {
                     <h3 className="font-bold text-lg">
                       {selectedName || "Klik box untuk upload"}
                     </h3>
-                    <p className="text-sm mt-[10px] text-[#bbcada]">
-                      Max ukuran file 2 mb
-                    </p>
                     <input
-                      id="upload-input"
+                      id="logo"
+                      name="logo"
                       type="file"
                       className="hidden"
                       accept=".png, .jpg, .jpeg"
-                      {...register("logo")}
                       onChange={handleFileChange}
                     />
-                    <span className="text-red-400">{errors.logo?.message}</span>
                   </label>
                   <div
                     className={clsx("flex mt-2", {
@@ -171,9 +165,10 @@ const Form = () => {
                   rows={3}
                   className="peer block w-full cursor-text rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                   placeholder="Masukkan Alamat Supplier"
-                  //   {...register("Description")}
+                  {...register("address")}
                 />
                 <WarehouseOutlined className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
+                <p className="text-red-400">{errors.address?.message}</p>
               </div>
             </div>
             <div className="mb-4">
@@ -186,11 +181,9 @@ const Form = () => {
                   type="email"
                   className="peer block w-full cursor-text rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                   placeholder="Masukkan Email Supplier"
-                  //   {...register("Description")}
+                  {...register("email")}
                 />
-                <span className="text-red-400">
-                  {/* {errors.Description?.message} */}
-                </span>
+                <p className="text-red-400">{errors.email?.message}</p>
                 <EmailOutlined className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
               </div>
             </div>
@@ -201,13 +194,12 @@ const Form = () => {
               <div className="relative">
                 <input
                   id="telp"
+                  inputMode="numeric"
                   className="peer block w-full cursor-text rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                   placeholder="Masukkan No Telp / HP Supplier"
-                  //   {...register("Description")}
+                  {...register("telp")}
                 />
-                <span className="text-red-400">
-                  {/* {errors.Description?.message} */}
-                </span>
+                <p className="text-red-400">{errors.telp?.message}</p>
                 <PhoneIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
               </div>
             </div>
