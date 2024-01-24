@@ -12,12 +12,7 @@ import {
   supplierSchema,
   supplierSchemaType,
 } from "./schemas";
-import {
-  CategoryData,
-  SubCategory2Data,
-  SubCategoryData,
-  SupplierData,
-} from "./interface";
+import { CategoryData, SubCategory2Data, SubCategoryData } from "./interface";
 import m_subCategories from "./(models)/m_subCategories";
 import m_subCategories2 from "./(models)/m_subCategories2";
 import path from "path";
@@ -180,17 +175,19 @@ export async function addSupplier(
   const logo = formData.get("logo") as File;
 
   let uploadDir = "";
-  let filePath = "";
+  let dir = "";
+  let fileName = "";
 
   if (logo !== null) {
     try {
-      uploadDir = path.join(process.cwd(), "/public/supplier/");
+      dir = "/supplier/";
+      uploadDir = path.join(process.cwd(), "/public" + dir);
 
       await fs.mkdir(uploadDir, { recursive: true });
 
-      const fileName = `${Date.now()}-${logo.name}`;
+      fileName = `${Date.now()}-${logo.name}`;
 
-      filePath = path.join(uploadDir, fileName);
+      const filePath = path.join(uploadDir, fileName);
 
       // Baca data dari file dan simpan ke sistem file
       const fileBuffer = await logo.arrayBuffer();
@@ -206,8 +203,8 @@ export async function addSupplier(
     const myData = {
       ...schemaData,
       logo: {
-        fileName: logo?.name,
-        filePath: filePath,
+        fileName: fileName,
+        filePath: dir,
       },
     };
     console.log(myData);
