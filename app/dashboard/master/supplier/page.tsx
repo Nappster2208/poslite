@@ -1,6 +1,8 @@
+import { FetchSupplierPage } from "@/app/lib/data";
 import { lusitana } from "@/app/ui/fonts";
 import { CreateSupplier } from "@/app/ui/master/supplier/button";
 import Table from "@/app/ui/master/supplier/table";
+import Pagination from "@/app/ui/pagination";
 import Search from "@/app/ui/search";
 import { TableSkeleton } from "@/app/ui/skeletons";
 import { Metadata } from "next";
@@ -9,7 +11,7 @@ import { Suspense } from "react";
 export const metadata: Metadata = {
   title: "Supplier",
 };
-export default function Page({
+export default async function Page({
   searchParams,
 }: {
   searchParams?: {
@@ -19,6 +21,8 @@ export default function Page({
 }) {
   const query = searchParams?.query || "";
   const currentPage = Number(searchParams?.page || 1);
+
+  const totalPages = await FetchSupplierPage(query);
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
@@ -34,7 +38,7 @@ export default function Page({
         <Table query={query} currentPage={currentPage} />
       </Suspense>
       <div className="mt-5 flex w-full justify-center">
-        {/* <Pagination totalPages={totalPages} /> */}
+        <Pagination totalPages={totalPages} />
       </div>
     </div>
   );
