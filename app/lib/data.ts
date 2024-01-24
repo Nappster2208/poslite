@@ -278,3 +278,16 @@ export async function FetchSupplierWithId(id: string) {
     throw new Error("Failed to fetch supplier.");
   }
 }
+
+export async function FetchSupplierPage(query: string) {
+  noStore();
+  try {
+    await connect();
+    const count = await m_supplier.countDocuments({});
+    const totalPage = Math.ceil(count / ITEMS_PER_PAGE);
+    return totalPage;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch total number of Supplier.");
+  }
+}
