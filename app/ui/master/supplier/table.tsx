@@ -1,7 +1,7 @@
 import { FetchFilteredSupplierData } from "@/app/lib/data";
 import { Tooltip } from "@mui/material";
 import Image from "next/image";
-import { UpdateSupplier } from "./button";
+import { DeleteSupplier, UpdateSupplier } from "./button";
 
 let url = process.env.BASE_URL;
 const Table = async ({
@@ -29,7 +29,7 @@ const Table = async ({
                       <div className="mb-2 flex items-center">
                         <Image
                           src={item.logo.filePath + item.logo.fileName}
-                          className="mr-2 rounded-full"
+                          className="mr-2 rounded-full aspect-square"
                           width={28}
                           height={28}
                           alt={`${item.logo.fileName}'s picture`}
@@ -63,6 +63,25 @@ const Table = async ({
                         }}
                       >
                         <UpdateSupplier id={item._id.toString()} />
+                      </Tooltip>
+                      <Tooltip
+                        title="Delete"
+                        placement="bottom"
+                        arrow
+                        slotProps={{
+                          popper: {
+                            modifiers: [
+                              {
+                                name: "offset",
+                                options: {
+                                  offset: [0, -10],
+                                },
+                              },
+                            ],
+                          },
+                        }}
+                      >
+                        <DeleteSupplier id={item._id.toString()} />
                       </Tooltip>
                     </div>
                   </div>
@@ -140,6 +159,25 @@ const Table = async ({
                         }}
                       >
                         <UpdateSupplier id={item._id.toString()} />
+                      </Tooltip>
+                      <Tooltip
+                        title="Delete"
+                        placement="bottom"
+                        arrow
+                        slotProps={{
+                          popper: {
+                            modifiers: [
+                              {
+                                name: "offset",
+                                options: {
+                                  offset: [0, -10],
+                                },
+                              },
+                            ],
+                          },
+                        }}
+                      >
+                        <DeleteSupplier id={item._id.toString()} />
                       </Tooltip>
                     </div>
                   </td>
