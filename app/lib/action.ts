@@ -219,3 +219,17 @@ export async function addSupplier(
   }
   redirect("/dashboard/master/supplier/");
 }
+
+export async function deleteSupplier(id: string) {
+  try {
+    await connect();
+    await m_supplier.findByIdAndDelete(id);
+    revalidatePath("/dashboard/master/supplier");
+  } catch (error) {
+    console.log("Error deleting supplier", error);
+    return NextResponse.json(
+      { message: "Error deleting supplier", error },
+      { status: 400 }
+    );
+  }
+}
