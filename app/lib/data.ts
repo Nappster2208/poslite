@@ -5,6 +5,7 @@ import m_subCategories from "./(models)/m_subCategories";
 import { Types } from "mongoose";
 import m_subCategories2 from "./(models)/m_subCategories2";
 import { NextResponse } from "next/server";
+import m_supplier from "./(models)/m_supplier";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -230,5 +231,50 @@ export async function FetchSubCategory2(id: string) {
     return data;
   } catch (error) {
     throw new Error("Failed to fetch total number of categories. " + error);
+  }
+}
+
+export async function FetchFilteredSupplierData(
+  query: string,
+  currentPage: number
+) {
+  noStore();
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  try {
+    await connect();
+    const supplier = await m_supplier.aggregate([
+      {
+        $match: {
+          $or: [
+            { code: { $regex: new RegExp(query, "i") } },
+            { name: { $regex: new RegExp(query, "i") } },
+          ],
+        },
+      },
+      {
+        $sort: { createdAt: -1 },
+      },
+      {
+        $skip: offset,
+      },
+      {
+        $limit: ITEMS_PER_PAGE,
+      },
+    ]);
+    return supplier;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch filtered supplier.");
+  }
+}
+
+export async function FetchSupplierWithId(id: string) {
+  try {
+    await connect();
+    const result = await m_supplier.findById({ _id: id });
+    return result;
+  } catch (error) {
+    throw new Error("Failed to fetch supplier.");
   }
 }
