@@ -1,4 +1,4 @@
-import { PlusIcon } from "@heroicons/react/24/outline";
+import { PencilIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
 export function CreateSupplier() {
@@ -10,5 +10,30 @@ export function CreateSupplier() {
       <span className="hidden md:block">Tambah Supplier</span>{" "}
       <PlusIcon className="h-5 md:ml-4" />
     </Link>
+  );
+}
+
+export function UpdateSupplier({ id }: { id: string }) {
+  return (
+    <Link
+      href={`/dashboard/master/supplier/${id}/edit`}
+      className="rounded-md p-1 hover:bg-gray-100 flex flex-col items-center"
+    >
+      <PencilIcon className="w-5" />
+      <span className="sr-only">Edit</span>
+    </Link>
+  );
+}
+
+export function DeleteSupplier({ id }: { id: string }) {
+  // const deleteSupplierWithId = deleteCategory.bind(null, id);
+  return (
+    <form>
+      {/* <form action={deleteSupplierWithId}> */}
+      <button className="rounded-md p-1 hover:bg-gray-100 flex flex-col items-center">
+        <TrashIcon className="w-5" />
+        <span className="sr-only">Delete</span>
+      </button>
+    </form>
   );
 }
