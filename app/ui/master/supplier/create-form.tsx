@@ -1,9 +1,10 @@
 "use client";
+import { v4 as uuidv4 } from "uuid";
 import { PencilIcon, PhoneIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { Buttons } from "../../button";
 import Image from "next/image";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
 import clsx from "clsx";
 import { EmailOutlined, WarehouseOutlined } from "@mui/icons-material";
 import { addSupplier } from "@/app/lib/action";
@@ -11,11 +12,38 @@ import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { supplierSchema, supplierSchemaType } from "@/app/lib/schemas";
+import { useDebouncedCallback } from "use-debounce";
 
 const Form = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [selectedName, setSelectedName] = useState<String | undefined>("");
   const [selectedImageURL, setSelectedImageURL] = useState<string | null>(null);
+  const [isUnique, setIsUnique] = useState("");
+  const [code, setMyCode] = useState("");
+
+  const generateCode = () => {
+    const newCode = uuidv4();
+    setMyCode(newCode);
+  };
+
+  const cekCode = useDebouncedCallback((code: string) => {
+    if (code === "") {
+      setIsUnique("");
+      return;
+    }
+
+    const url = `/api/suppliers/${code}`;
+
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data > 0) {
+          setIsUnique("Kode sudah digunakan");
+        } else {
+          setIsUnique("");
+        }
+      });
+  }, 500);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] ?? null;
@@ -49,6 +77,7 @@ const Form = () => {
       if (selectedFile) {
         formData.append("logo", selectedFile);
       }
+
       await addSupplier(formData, {
         code: data.code,
         name: data.name,
@@ -65,7 +94,6 @@ const Form = () => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        {/* <form action={addSupplier}> */}
         <div className="rounded-md p-4 md:p-6">
           <div className="bg-white shadow-md p-2 rounded-lg">
             <div className="mb-4">
@@ -77,13 +105,22 @@ const Form = () => {
                   id="code"
                   className="peer block w-full cursor-text rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                   placeholder="Kode harus unik"
+                  value={code}
                   {...register("code")}
+                  onChange={(e) => {
+                    cekCode(e.target.value);
+                    setMyCode(e.target.value);
+                  }}
                 />
                 <PencilIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
-                <p className="text-red-400">{errors.code?.message}</p>
               </div>
+              <p className="text-red-400">{errors.code?.message}</p>
+              <p className={clsx("text-red-400", { hidden: isUnique === "" })}>
+                {isUnique}
+              </p>
               <button
                 type="button"
+                onClick={() => generateCode()}
                 className="text-cyan-500 hover:text-cyan-600 mx-2 mt-1"
               >
                 Generate Code
@@ -101,8 +138,8 @@ const Form = () => {
                   {...register("name")}
                 />
                 <PencilIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
-                <p className="text-red-400">{errors.name?.message}</p>
               </div>
+              <p className="text-red-400">{errors.name?.message}</p>
             </div>
             <div className="mb-4">
               <label htmlFor="name" className="mb-2 block text-sm font-medium">
@@ -168,8 +205,8 @@ const Form = () => {
                   {...register("address")}
                 />
                 <WarehouseOutlined className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
-                <p className="text-red-400">{errors.address?.message}</p>
               </div>
+              <p className="text-red-400">{errors.address?.message}</p>
             </div>
             <div className="mb-4">
               <label htmlFor="email" className="mb-2 block text-sm font-medium">
