@@ -114,25 +114,28 @@ export default async function CategoryTable({
                       >
                         <UpdateCategory id={category._id} sub1="" sub2="" />
                       </Tooltip>
-                      <Tooltip
-                        title="Delete"
-                        placement="bottom"
-                        arrow
-                        slotProps={{
-                          popper: {
-                            modifiers: [
-                              {
-                                name: "offset",
-                                options: {
-                                  offset: [0, -10],
-                                },
+                      {category.subCategories &&
+                        category.subCategories.length === 0 && (
+                          <Tooltip
+                            title="Delete"
+                            placement="bottom"
+                            arrow
+                            slotProps={{
+                              popper: {
+                                modifiers: [
+                                  {
+                                    name: "offset",
+                                    options: {
+                                      offset: [0, -10],
+                                    },
+                                  },
+                                ],
                               },
-                            ],
-                          },
-                        }}
-                      >
-                        <DeleteCategory id={category._id.toString()} />
-                      </Tooltip>
+                            }}
+                          >
+                            <DeleteCategory id={category._id.toString()} />
+                          </Tooltip>
+                        )}
                     </div>
                   </td>
                 </tr>
