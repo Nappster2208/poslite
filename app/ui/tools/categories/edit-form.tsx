@@ -12,15 +12,8 @@ import {
 } from "@/validation/categorySchema";
 import { toast } from "sonner";
 
-const EditCategoryForm: React.FC<{ category: any }> = ({ category }) => {
-  const categoryData = category.length > 0 ? category[0] : null;
-
-  if (!categoryData) {
-    toast.error("Data category tidak valid");
-    return null;
-  }
-
-  const { _id, catName, catDesc } = categoryData;
+const EditCategoryForm = ({ category }: { category: any }) => {
+  const { _id, catName, catDesc } = category;
 
   const {
     register,
