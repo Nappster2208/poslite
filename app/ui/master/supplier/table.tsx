@@ -123,7 +123,7 @@ const Table = async ({
                     <div className="flex items-center gap-3">
                       <Image
                         src={item.logo.filePath + item.logo.fileName}
-                        className="rounded-full"
+                        className="rounded-full aspect-square"
                         width={28}
                         height={28}
                         alt={`${item.logo.fileName}'s picture`}
