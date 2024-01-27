@@ -7,7 +7,6 @@ export default async function Page({ params }: { params: { id: string } }) {
   const id = params.id;
 
   const data = await FetchCategoryWithId(id);
-  const category = JSON.stringify(data);
 
   if (!FetchCategoryWithId) {
     notFound();
@@ -28,7 +27,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           },
         ]}
       />
-      <Form category={category} />
+      <Form category={data} />
     </main>
   );
 }

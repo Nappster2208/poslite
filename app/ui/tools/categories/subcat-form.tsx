@@ -23,7 +23,7 @@ const Subcat = ({ category }: { category: any }) => {
     splitSub = subcat?.split(",");
   }
 
-  const { _id, catName } = JSON.parse(category);
+  const { _id, catName } = category;
 
   const {
     register,

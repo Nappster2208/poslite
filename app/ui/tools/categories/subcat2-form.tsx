@@ -62,7 +62,6 @@ const Form = ({ data }: { data: any }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="rounded-lg p-4 md:p-6">
           <div className="bg-white shadow-md p-2 rounded-lg">
-            <input type="hidden" id="subcatId" name="subcatId" value={_id} />
             <div className="mb-4 ">
               <label
                 htmlFor="subcatName2"

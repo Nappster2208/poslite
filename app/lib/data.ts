@@ -4,7 +4,6 @@ import connect from "./(connection)/connection";
 import m_subCategories from "./(models)/m_subCategories";
 import { Types } from "mongoose";
 import m_subCategories2 from "./(models)/m_subCategories2";
-import { NextResponse } from "next/server";
 import m_supplier from "./(models)/m_supplier";
 
 const ITEMS_PER_PAGE = 6;
@@ -55,9 +54,9 @@ export async function FetchFilteredCategories(
 export async function FetchCategoryWithId(id: string) {
   noStore();
   try {
-    const category = await m_categories.findById({ _id: id });
+    const result = await m_categories.findById({ _id: id });
     // return JSON.stringify(category);
-    return category;
+    return JSON.parse(JSON.stringify(result));
   } catch (error) {
     throw new Error("Failed to fetch category.");
   }
@@ -141,7 +140,7 @@ export async function FetchSubCategoryWithId(id: string) {
   try {
     await connect();
     const result = await m_subCategories.findById({ _id: id });
-    return result;
+    return JSON.parse(JSON.stringify(result));
   } catch (error) {
     throw new Error("Failed to fetch filtered categories.");
   }

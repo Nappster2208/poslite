@@ -10,8 +10,7 @@ export const metadata: Metadata = {
 
 export default async function Page({ params }: { params: { id: string } }) {
   const id = params.id;
-  const data = await FetchCategoryWithId(id);
-  const category = JSON.parse(JSON.stringify(data));
+  const category = await FetchCategoryWithId(id);
 
   if (!FetchCategoryWithId) {
     notFound();
