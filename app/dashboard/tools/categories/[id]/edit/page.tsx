@@ -1,8 +1,8 @@
-import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import Breadcrumbs from "@/app/ui/breadcrumbs";
 import { FetchCategoryWithId } from "@/app/lib/data";
 import Form from "@/app/ui/tools/categories/edit-form";
+import NotFound from "./not-found";
 
 export const metadata: Metadata = {
   title: "Edit Category",
@@ -13,7 +13,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   const category = await FetchCategoryWithId(id);
 
   if (!FetchCategoryWithId) {
-    notFound();
+    NotFound();
   }
 
   return (
