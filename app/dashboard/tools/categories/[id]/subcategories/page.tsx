@@ -25,8 +25,7 @@ export default async function Page({
   const currentPage = Number(searchParams?.page || 1);
 
   const totalPages = await FetchSubCategoryPage(query, params.id);
-  const data = await FetchCategoryWithId(params.id);
-  const category = JSON.parse(data);
+  const category = await FetchCategoryWithId(params.id);
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">

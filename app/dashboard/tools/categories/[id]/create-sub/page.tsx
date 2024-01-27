@@ -7,8 +7,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   const id = params.id;
 
   const data = await FetchCategoryWithId(id);
-
-  const category = JSON.parse(data);
+  const category = JSON.stringify(data);
 
   if (!FetchCategoryWithId) {
     notFound();

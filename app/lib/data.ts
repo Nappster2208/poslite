@@ -56,7 +56,8 @@ export async function FetchCategoryWithId(id: string) {
   noStore();
   try {
     const category = await m_categories.findById({ _id: id });
-    return JSON.stringify(category);
+    // return JSON.stringify(category);
+    return category;
   } catch (error) {
     throw new Error("Failed to fetch category.");
   }

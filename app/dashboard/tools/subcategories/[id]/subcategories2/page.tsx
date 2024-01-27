@@ -5,6 +5,7 @@ import {
 } from "@/app/lib/data";
 import Breadcrumbs from "@/app/ui/breadcrumbs";
 import { lusitana } from "@/app/ui/fonts";
+import Pagination from "@/app/ui/pagination";
 import Search from "@/app/ui/search";
 import { TableSkeleton } from "@/app/ui/skeletons";
 import { AddSubCategory } from "@/app/ui/tools/categories/buttons";
@@ -31,10 +32,6 @@ const Page = async ({
   const sub = await FetchSubCategoryWithId(params.id);
   const { catId, subcatName } = sub;
   const category = await FetchCategoryWithId(catId);
-  let catName = "";
-  category.map((item: any) => {
-    catName = item.catName;
-  });
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
@@ -55,7 +52,7 @@ const Page = async ({
       </div>
       <div className="flex w-full items-center justify-between">
         <span className={clsx(lusitana.className, "flex text-lg md:text-xl")}>
-          {catName + " > " + subcatName}
+          {category.catName + " > " + subcatName}
         </span>
       </div>
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
@@ -73,6 +70,9 @@ const Page = async ({
           currentPage={currentPage}
         />
       </Suspense>
+      <div className="mt-5 flex w-full justify-center">
+        <Pagination totalPages={totalPages} />
+      </div>
     </div>
   );
 };
