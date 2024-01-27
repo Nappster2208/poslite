@@ -6,6 +6,7 @@ import {
   UpdateCategory,
 } from "./buttons";
 import { Tooltip } from "@mui/material";
+import NotFound from "@/app/dashboard/tools/categories/not-found";
 
 export default async function CategoryTable({
   query,
@@ -16,6 +17,9 @@ export default async function CategoryTable({
 }) {
   const categories = await FetchFilteredCategories(query, currentPage);
 
+  if (!FetchFilteredCategories) {
+    NotFound();
+  }
   return (
     <div className="mt-6 flow-root">
       <div className="min-w-full align-middle">
