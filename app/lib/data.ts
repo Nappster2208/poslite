@@ -271,10 +271,11 @@ export async function FetchFilteredSupplierData(
 }
 
 export async function FetchSupplierWithId(id: string) {
+  noStore();
   try {
     await connect();
     const result = await m_supplier.findById({ _id: id });
-    return result;
+    return JSON.parse(JSON.stringify(result));
   } catch (error) {
     throw new Error("Failed to fetch supplier.");
   }
