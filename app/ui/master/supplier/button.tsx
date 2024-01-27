@@ -1,3 +1,4 @@
+import { deleteSupplier } from "@/app/lib/action";
 import { PencilIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
@@ -26,10 +27,9 @@ export function UpdateSupplier({ id }: { id: string }) {
 }
 
 export function DeleteSupplier({ id }: { id: string }) {
-  // const deleteSupplierWithId = deleteCategory.bind(null, id);
+  const deleteSupplierWithId = deleteSupplier.bind(null, id);
   return (
-    <form>
-      {/* <form action={deleteSupplierWithId}> */}
+    <form action={deleteSupplierWithId}>
       <button className="rounded-md p-1 hover:bg-gray-100 flex flex-col items-center">
         <TrashIcon className="w-5" />
         <span className="sr-only">Delete</span>
