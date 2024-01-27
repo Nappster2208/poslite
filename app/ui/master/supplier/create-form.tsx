@@ -4,7 +4,7 @@ import { PencilIcon, PhoneIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { Buttons } from "../../button";
 import Image from "next/image";
-import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import clsx from "clsx";
 import { EmailOutlined, WarehouseOutlined } from "@mui/icons-material";
 import { addSupplier } from "@/app/lib/action";
