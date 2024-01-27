@@ -14,7 +14,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "sonner";
 import { AddSubCategory } from "@/app/lib/action";
 
-const Subcat: React.FC<{ category: any }> = ({ category }) => {
+const Subcat = ({ category }: { category: any }) => {
   const sub = useSearchParams();
   const subcat = sub?.get("sub");
   let splitSub: string[] = [];
@@ -23,8 +23,7 @@ const Subcat: React.FC<{ category: any }> = ({ category }) => {
     splitSub = subcat?.split(",");
   }
 
-  const categoryData = category.length > 0 ? category[0] : null;
-  const { _id, catName } = categoryData;
+  const { _id, catName } = category;
 
   const {
     register,

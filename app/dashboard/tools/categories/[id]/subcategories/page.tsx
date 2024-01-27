@@ -25,7 +25,8 @@ export default async function Page({
   const currentPage = Number(searchParams?.page || 1);
 
   const totalPages = await FetchSubCategoryPage(query, params.id);
-  const category = await FetchCategoryWithId(params.id);
+  const data = await FetchCategoryWithId(params.id);
+  const category = JSON.parse(data);
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
@@ -41,14 +42,12 @@ export default async function Page({
         />
       </div>
       <div className="flex w-full items-center justify-between">
-        {category?.map((item) => (
-          <span
-            key={item._id}
-            className={clsx(lusitana.className, "flex text-lg md:text-xl")}
-          >
-            {item.catName}
-          </span>
-        ))}
+        <span
+          key={category._id}
+          className={clsx(lusitana.className, "flex text-lg md:text-xl")}
+        >
+          {category.catName}
+        </span>
       </div>
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
         <Search placeholder="Search sub category..." />
