@@ -18,6 +18,12 @@ export default async function SubCategoryTable({
   currentPage: number;
 }) {
   const subs = await FetchFilteredSubCategories(id, query, currentPage);
+  let deletedAt = "";
+  subs.map((sub) => {
+    sub.subCategories2.map((item: any) => {
+      deletedAt = item.deletedAt;
+    });
+  });
   return (
     <div className="mt-6 flow-root">
       <div className="min-w-full align-middle">
@@ -52,7 +58,7 @@ export default async function SubCategoryTable({
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end md:gap-3">
-                      {sub.subCategories2 && sub.subCategories2.length > 0 && (
+                      {sub.subCategories2 && deletedAt === "" && (
                         <Tooltip
                           title="Sub"
                           placement="bottom"
@@ -119,7 +125,7 @@ export default async function SubCategoryTable({
                           sub2=""
                         />
                       </Tooltip>
-                      {sub.subCategories2.length === 0 && (
+                      {sub.subCategories2 && deletedAt !== "" && (
                         <Tooltip
                           title="Delete"
                           placement="bottom"
