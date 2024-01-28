@@ -63,6 +63,7 @@ export async function FetchFilteredCategories(
 export async function FetchCategoryWithId(id: string) {
   noStore();
   try {
+    await connect();
     const result = await m_categories.findById({
       _id: id,
       deletedAt: { $in: [null, "", undefined] },
@@ -118,8 +119,8 @@ export async function FetchFilteredSubCategories(
   query: string,
   currentPage: number
 ) {
-  const catId = new Types.ObjectId(id);
   noStore();
+  const catId = new Types.ObjectId(id);
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
@@ -241,6 +242,7 @@ export async function FetchSubCategory2Page(query: string, id: string) {
 export async function FetchSubCategory2(id: string) {
   const _id = new Types.ObjectId(id);
   try {
+    await connect();
     const data = await m_subCategories2.aggregate([
       {
         $match: { _id: _id },
