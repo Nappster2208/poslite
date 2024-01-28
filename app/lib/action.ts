@@ -18,12 +18,20 @@ import m_subCategories2 from "./(models)/m_subCategories2";
 import path from "path";
 import fs from "fs/promises";
 import m_supplier from "./(models)/m_supplier";
+import { getDate, getDateTime } from "./utils";
 
 export async function createCategory(formData: CategoryData) {
   try {
     await connect();
-    await categorySchema.validate(formData, { abortEarly: false });
-    await m_categories.create(formData);
+    const myData = {
+      ...formData,
+      tanggal: getDate(),
+      createdAt: getDateTime(),
+      updatedAt: getDateTime(),
+      deletedAt: "",
+    };
+    await categorySchema.validate(myData, { abortEarly: false });
+    await m_categories.create(myData);
     revalidatePath("/dashboard/tools/categories");
   } catch (error) {
     console.error("Error creating category:", error);
@@ -39,8 +47,9 @@ export async function updateCategory(id: string, formData: CategoryData) {
   try {
     const { catName, catDesc } = formData;
     await connect();
+    const updatedAt = getDateTime();
     await categorySchema.validate(formData, { abortEarly: false });
-    await m_categories.findByIdAndUpdate(id, { catName, catDesc });
+    await m_categories.findByIdAndUpdate(id, { catName, catDesc, updatedAt });
     revalidatePath("/dashboard/tools/categories");
   } catch (error) {
     console.error("Error updating category:", error);
@@ -55,7 +64,8 @@ export async function updateCategory(id: string, formData: CategoryData) {
 export async function deleteCategory(id: string) {
   try {
     await connect();
-    await m_categories.findByIdAndDelete(id);
+    const deletedAt = getDateTime();
+    await m_categories.findByIdAndUpdate(id, { deletedAt });
     revalidatePath("/dashboard/tools/categories");
   } catch (error) {
     console.log("Error deleting category", error);
@@ -207,7 +217,6 @@ export async function addSupplier(
         filePath: dir,
       },
     };
-    console.log(myData);
     await supplierSchema.validate(myData, { abortEarly: false });
     await m_supplier.create(myData);
     revalidatePath("/dashboard/master/supplier/");

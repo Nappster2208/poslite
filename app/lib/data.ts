@@ -20,9 +20,18 @@ export async function FetchFilteredCategories(
     const categories = await m_categories.aggregate([
       {
         $match: {
-          $or: [
-            { catName: { $regex: new RegExp(query, "i") } },
-            { catDesc: { $regex: new RegExp(query, "i") } },
+          $and: [
+            {
+              $or: [
+                { catName: { $regex: new RegExp(query, "i") } },
+                { catDesc: { $regex: new RegExp(query, "i") } },
+              ],
+            },
+            {
+              deletedAt: {
+                $in: [null, "", undefined],
+              },
+            },
           ],
         },
       },
@@ -55,7 +64,6 @@ export async function FetchCategoryWithId(id: string) {
   noStore();
   try {
     const result = await m_categories.findById({ _id: id });
-    // return JSON.stringify(category);
     return JSON.parse(JSON.stringify(result));
   } catch (error) {
     throw new Error("Failed to fetch category.");
@@ -67,7 +75,13 @@ export async function FetchCategoryPage(query: string) {
   noStore();
   try {
     await connect();
-    const count = await m_categories.countDocuments({});
+    const count = await m_categories
+      .find({
+        deletedAt: {
+          $in: [null, "", undefined],
+        },
+      })
+      .countDocuments({});
     const totalPage = Math.ceil(count / ITEMS_PER_PAGE);
     return totalPage;
   } catch (error) {

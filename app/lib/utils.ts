@@ -75,3 +75,34 @@ export function getURL(path: string) {
     : window.location.origin;
   return new URL(path, baseURL).toString();
 }
+
+export const getDate = () => {
+  const date = new Date();
+  const formatter = new Intl.DateTimeFormat("en-US", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  }).format(date);
+  const [month, day, year] = formatter.split("/");
+  const formattedDate = `${year}-${month}-${day}`;
+  return formattedDate.toString();
+};
+
+export const getDateTime = () => {
+  const date = new Date();
+  const theDate = new Intl.DateTimeFormat("en-US", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  }).format(date);
+  const theTime = new Intl.DateTimeFormat("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+    timeZone: "Asia/Jakarta",
+  }).format(date);
+  const [month, day, year] = theDate.split("/");
+  const formattedDate = `${year}-${month}-${day}`;
+  return formattedDate + " " + theTime;
+};
