@@ -44,10 +44,10 @@ export async function createCategory(formData: CategoryData) {
 }
 
 export async function updateCategory(id: string, formData: CategoryData) {
+  const { catName, catDesc } = formData;
+  const updatedAt = getDateTime();
   try {
-    const { catName, catDesc } = formData;
     await connect();
-    const updatedAt = getDateTime();
     await categorySchema.validate(formData, { abortEarly: false });
     await m_categories.findByIdAndUpdate(id, { catName, catDesc, updatedAt });
     revalidatePath("/dashboard/tools/categories");
@@ -62,9 +62,9 @@ export async function updateCategory(id: string, formData: CategoryData) {
 }
 
 export async function deleteCategory(id: string) {
+  const deletedAt = getDateTime();
   try {
     await connect();
-    const deletedAt = getDateTime();
     await m_categories.findByIdAndUpdate(id, { deletedAt });
     revalidatePath("/dashboard/tools/categories");
   } catch (error) {
@@ -80,8 +80,15 @@ export async function AddSubCategory(formData: SubCategoryData) {
   const { catId } = formData;
   try {
     await connect();
-    await subcategorySchema.validate(formData, { abortEarly: false });
-    await m_subCategories.create(formData);
+    const myData = {
+      ...formData,
+      tanggal: getDate(),
+      createdAt: getDateTime(),
+      updatedAt: getDateTime(),
+      deletedAt: "",
+    };
+    await subcategorySchema.validate(myData, { abortEarly: false });
+    await m_subCategories.create(myData);
 
     revalidatePath("/dashboard/tools/categories");
     revalidatePath(`/dashboard/tools/categories/${catId}/subcategories`);
@@ -97,10 +104,15 @@ export async function AddSubCategory(formData: SubCategoryData) {
 
 export async function updateSubCategory(id: string, formData: SubCategoryData) {
   const { catId, subcatName, subcatDesc } = formData;
+  const updatedAt = getDateTime();
   try {
     await connect();
     await subcategorySchema.validate(formData, { abortEarly: false });
-    await m_subCategories.findByIdAndUpdate(id, { subcatName, subcatDesc });
+    await m_subCategories.findByIdAndUpdate(id, {
+      subcatName,
+      subcatDesc,
+      updatedAt,
+    });
     revalidatePath(`/dashboard/tools/categories/${catId}/subcategories`);
   } catch (error) {
     console.error("Error updating category:", error);
@@ -113,9 +125,10 @@ export async function updateSubCategory(id: string, formData: SubCategoryData) {
 }
 
 export async function deleteSubCategory(id: string, catId: string) {
+  const deletedAt = getDateTime();
   try {
     await connect();
-    await m_subCategories.findByIdAndDelete(id);
+    await m_subCategories.findByIdAndUpdate(id, { deletedAt });
     revalidatePath(`/dashboard/tools/categories/${catId}/subcategories`);
   } catch (error) {
     console.log("Error deleting category", error);
@@ -127,9 +140,10 @@ export async function deleteSubCategory(id: string, catId: string) {
 }
 
 export async function deleteSubCategory2(id: string) {
+  const deletedAt = getDateTime();
   try {
     await connect();
-    await m_subCategories2.findByIdAndDelete(id);
+    await m_subCategories2.findByIdAndUpdate(id, { deletedAt });
     revalidateTag("r_subcategories");
     revalidateTag("r_subcategories2");
   } catch (error) {
@@ -144,8 +158,15 @@ export async function deleteSubCategory2(id: string) {
 export async function createSub2(formData: SubCategory2Data) {
   try {
     await connect();
-    await subcategory2Schema.validate(formData, { abortEarly: false });
-    await m_subCategories2.create(formData);
+    const myData = {
+      ...formData,
+      tanggal: getDate(),
+      createdAt: getDateTime(),
+      updatedAt: getDateTime(),
+      deletedAt: "",
+    };
+    await subcategory2Schema.validate(myData, { abortEarly: false });
+    await m_subCategories2.create(myData);
     revalidateTag("r_subcategories");
     revalidateTag("r_subcategories2");
   } catch (error) {
@@ -164,10 +185,15 @@ export async function updateSubCategory2(
   formData: SubCategory2Data
 ) {
   const { subcatId, subcatName, subcatDesc } = formData;
+  const updatedAt = getDateTime();
   try {
     await connect();
     await subcategory2Schema.validate(formData, { abortEarly: false });
-    await m_subCategories2.findByIdAndUpdate(id, { subcatName, subcatDesc });
+    await m_subCategories2.findByIdAndUpdate(id, {
+      subcatName,
+      subcatDesc,
+      updatedAt,
+    });
     revalidatePath(`/dashboard/tools/subcategories/${subcatId}/subcategories2`);
   } catch (error) {
     return NextResponse.json(
@@ -216,6 +242,10 @@ export async function addSupplier(
         fileName: fileName,
         filePath: dir,
       },
+      tanggal: getDate(),
+      createdAt: getDateTime(),
+      updatedAt: getDateTime(),
+      deletedAt: "",
     };
     await supplierSchema.validate(myData, { abortEarly: false });
     await m_supplier.create(myData);
@@ -230,9 +260,10 @@ export async function addSupplier(
 }
 
 export async function deleteSupplier(id: string) {
+  const deletedAt = getDateTime();
   try {
     await connect();
-    await m_supplier.findByIdAndDelete(id);
+    await m_supplier.findByIdAndUpdate(id, { deletedAt });
     revalidatePath("/dashboard/master/supplier");
   } catch (error) {
     console.log("Error deleting supplier", error);

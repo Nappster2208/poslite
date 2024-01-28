@@ -63,10 +63,13 @@ export async function FetchFilteredCategories(
 export async function FetchCategoryWithId(id: string) {
   noStore();
   try {
-    const result = await m_categories.findById({ _id: id });
+    const result = await m_categories.findById({
+      _id: id,
+      deletedAt: { $in: [null, "", undefined] },
+    });
     return JSON.parse(JSON.stringify(result));
   } catch (error) {
-    throw new Error("Failed to fetch category.");
+    throw new Error("Failed to fetch category." + error);
   }
 }
 
@@ -94,7 +97,14 @@ export async function FetchSubCategoryPage(query: string, id: string) {
   noStore();
   try {
     await connect();
-    const count = await m_subCategories.find({ catId: id }).countDocuments();
+    const count = await m_subCategories
+      .find({
+        catId: id,
+        deletedAt: {
+          $in: [null, "", undefined],
+        },
+      })
+      .countDocuments();
     const totalPage = Math.ceil(count / ITEMS_PER_PAGE);
     return totalPage;
   } catch (error) {
@@ -119,9 +129,18 @@ export async function FetchFilteredSubCategories(
       {
         $match: {
           catId: catId,
-          $or: [
-            { subcatName: { $regex: new RegExp(query, "i") } },
-            { subcatDesc: { $regex: new RegExp(query, "i") } },
+          $and: [
+            {
+              $or: [
+                { subcatName: { $regex: new RegExp(query, "i") } },
+                { subcatDesc: { $regex: new RegExp(query, "i") } },
+              ],
+            },
+            {
+              deletedAt: {
+                $in: [null, "", undefined],
+              },
+            },
           ],
         },
       },
@@ -153,7 +172,10 @@ export async function FetchFilteredSubCategories(
 export async function FetchSubCategoryWithId(id: string) {
   try {
     await connect();
-    const result = await m_subCategories.findById({ _id: id });
+    const result = await m_subCategories.findById({
+      _id: id,
+      deletedAt: { $in: [null, "", undefined] },
+    });
     return JSON.parse(JSON.stringify(result));
   } catch (error) {
     throw new Error("Failed to fetch filtered categories.");
@@ -177,9 +199,16 @@ export async function FetchFilteredSubCategories2(
         {
           $match: {
             subcatId: subcatId,
-            $or: [
-              { subcatName: { $regex: new RegExp(query, "i") } },
-              { subcatDesc: { $regex: new RegExp(query, "i") } },
+            $and: [
+              {
+                $or: [
+                  { subcatName: { $regex: new RegExp(query, "i") } },
+                  { subcatDesc: { $regex: new RegExp(query, "i") } },
+                ],
+              },
+              {
+                deletedAt: { $in: [null, "", undefined] },
+              },
             ],
           },
         },
@@ -199,7 +228,7 @@ export async function FetchSubCategory2Page(query: string, id: string) {
   try {
     await connect();
     const count = await m_subCategories2
-      .find({ subcatId: id })
+      .find({ subcatId: id, deletedAt: { $in: [null, "", undefined] } })
       .countDocuments();
     const totalPage = Math.ceil(count / ITEMS_PER_PAGE);
     return totalPage;
@@ -260,9 +289,16 @@ export async function FetchFilteredSupplierData(
     const supplier = await m_supplier.aggregate([
       {
         $match: {
-          $or: [
-            { code: { $regex: new RegExp(query, "i") } },
-            { name: { $regex: new RegExp(query, "i") } },
+          $and: [
+            {
+              $or: [
+                { code: { $regex: new RegExp(query, "i") } },
+                { name: { $regex: new RegExp(query, "i") } },
+              ],
+            },
+            {
+              deletedAt: { $in: [null, "", undefined] },
+            },
           ],
         },
       },
@@ -287,7 +323,10 @@ export async function FetchSupplierWithId(id: string) {
   noStore();
   try {
     await connect();
-    const result = await m_supplier.findById({ _id: id });
+    const result = await m_supplier.findById({
+      _id: id,
+      deletedAt: { $in: [null, "", undefined] },
+    });
     return JSON.parse(JSON.stringify(result));
   } catch (error) {
     throw new Error("Failed to fetch supplier.");
@@ -298,7 +337,9 @@ export async function FetchSupplierPage(query: string) {
   noStore();
   try {
     await connect();
-    const count = await m_supplier.countDocuments({});
+    const count = await m_supplier
+      .find({ deletedAt: { $in: [null, "", undefined] } })
+      .countDocuments({});
     const totalPage = Math.ceil(count / ITEMS_PER_PAGE);
     return totalPage;
   } catch (error) {
