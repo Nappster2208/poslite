@@ -163,6 +163,7 @@ export async function FetchFilteredSubCategories(
         $limit: ITEMS_PER_PAGE,
       },
     ]);
+
     return subs;
   } catch (error) {
     console.error("Database Error:", error);
