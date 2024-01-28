@@ -9,13 +9,14 @@ import { useForm } from "react-hook-form";
 import { useDebouncedCallback } from "use-debounce";
 import { v4 as uuidv4 } from "uuid";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { addSupplier } from "@/app/lib/action";
+import { updateSupplier } from "@/app/lib/action";
 import { toast } from "sonner";
 import clsx from "clsx";
 import Link from "next/link";
 import { Buttons } from "../../button";
 
 const Form = ({ supplier }: { supplier: any }) => {
+  const _id = supplier._id;
   const imageUrl = supplier.logo.filePath + supplier.logo.fileName;
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [selectedName, setSelectedName] = useState<String | undefined>("");
@@ -82,7 +83,7 @@ const Form = ({ supplier }: { supplier: any }) => {
         formData.append("logo", selectedFile);
       }
 
-      await addSupplier(formData, {
+      await updateSupplier(_id, formData, {
         code: data.code,
         name: data.name,
         address: data.address,
