@@ -259,6 +259,76 @@ export async function addSupplier(
   redirect("/dashboard/master/supplier/");
 }
 
+export async function updateSupplier(
+  id: string,
+  formData: FormData,
+  schemaData: supplierSchemaType
+) {
+  const logo = formData.get("logo") as File;
+
+  let uploadDir = "";
+  let dir = "";
+  let fileName = "";
+
+  if (logo !== null) {
+    try {
+      dir = "/supplier/";
+      uploadDir = path.join(process.cwd(), "/public" + dir);
+
+      await fs.mkdir(uploadDir, { recursive: true });
+
+      fileName = `${Date.now()}-${logo.name}`;
+
+      const filePath = path.join(uploadDir, fileName);
+
+      // Check if the file already exists
+      const existingSupplier = await m_supplier.findById(id);
+      if (existingSupplier && existingSupplier.logo) {
+        const existingFilePath = path.join(
+          process.cwd(),
+          "/public" + existingSupplier.logo.filePath,
+          existingSupplier.logo.fileName
+        );
+
+        // Delete the old file if it exists
+        try {
+          await fs.access(existingFilePath);
+          await fs.unlink(existingFilePath);
+        } catch (error) {
+          // Handle error or ignore if the file doesn't exist
+        }
+      }
+
+      const fileBuffer = await logo.arrayBuffer();
+      await fs.writeFile(filePath, Buffer.from(fileBuffer));
+    } catch (error) {
+      console.error("Error saving file:", error);
+      throw new Error("Failed to save file");
+    }
+  }
+
+  try {
+    await connect();
+    const myData = {
+      ...schemaData,
+      logo: {
+        fileName: fileName,
+        filePath: dir,
+      },
+      updatedAt: getDateTime(),
+    };
+    await supplierSchema.validate(myData, { abortEarly: false });
+    await m_supplier.findByIdAndUpdate(id, myData);
+    revalidatePath("/dashboard/master/supplier/");
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Error creating supplier", error },
+      { status: 400 }
+    );
+  }
+  redirect("/dashboard/master/supplier/");
+}
+
 export async function deleteSupplier(id: string) {
   const deletedAt = getDateTime();
   try {
