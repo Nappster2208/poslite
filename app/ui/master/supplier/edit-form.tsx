@@ -16,7 +16,7 @@ import Link from "next/link";
 import { Buttons } from "../../button";
 
 const Form = ({ supplier }: { supplier: any }) => {
-  const _id = supplier._id;
+  const { _id } = supplier;
   const imageUrl = supplier.logo.filePath + supplier.logo.fileName;
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [selectedName, setSelectedName] = useState<String | undefined>("");
@@ -58,7 +58,7 @@ const Form = ({ supplier }: { supplier: any }) => {
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] ?? null;
-
+    console.log(file);
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setSelectedImageURL(imageUrl);

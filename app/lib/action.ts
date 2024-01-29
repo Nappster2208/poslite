@@ -265,6 +265,7 @@ export async function updateSupplier(
   schemaData: supplierSchemaType
 ) {
   const logo = formData.get("logo") as File;
+  console.log(logo);
 
   let uploadDir = "";
   let dir = "";
