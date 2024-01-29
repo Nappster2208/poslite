@@ -26,9 +26,15 @@ const Form = ({ supplier }: { supplier: any }) => {
   const [isUnique, setIsUnique] = useState("");
   const [code, setMyCode] = useState(supplier.code);
 
+  const handleCodeChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setMyCode(e.target.value);
+    cekCode(e.target.value);
+  };
+
   const generateCode = () => {
     const newCode = uuidv4();
     setMyCode(newCode);
+    cekCode(newCode);
   };
 
   const cekCode = useDebouncedCallback((code: string) => {
@@ -107,14 +113,11 @@ const Form = ({ supplier }: { supplier: any }) => {
               <div className="relative">
                 <input
                   id="code"
+                  value={code}
                   className="peer block w-full cursor-text rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                   placeholder="Kode harus unik"
-                  value={code}
                   {...register("code")}
-                  onChange={(e) => {
-                    cekCode(e.target.value);
-                    setMyCode(e.target.value);
-                  }}
+                  onChange={handleCodeChange}
                 />
                 <PencilIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
               </div>
