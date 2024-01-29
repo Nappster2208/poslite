@@ -119,7 +119,7 @@ export default async function CategoryTable({
                         <UpdateCategory id={category._id} sub1="" sub2="" />
                       </Tooltip>
                       {category.subCategories &&
-                        category.subCategories.length === 0 && (
+                        category.subCategories == 0 && (
                           <Tooltip
                             title="Delete"
                             placement="bottom"
