@@ -17,42 +17,47 @@ export async function FetchFilteredCategories(
 
   try {
     await connect();
-    const categories = await m_categories.aggregate([
-      {
-        $match: {
-          $and: [
-            {
-              $or: [
-                { catName: { $regex: new RegExp(query, "i") } },
-                { catDesc: { $regex: new RegExp(query, "i") } },
-              ],
-            },
-            {
-              deletedAt: {
-                $in: [null, "", undefined],
+    const categories = await m_categories
+      .aggregate([
+        {
+          $match: {
+            $and: [
+              {
+                $or: [
+                  { catName: { $regex: new RegExp(query, "i") } },
+                  { catDesc: { $regex: new RegExp(query, "i") } },
+                ],
+              },
+              {
+                deletedAt: {
+                  $in: [null, "", undefined],
+                },
+              },
+            ],
+          },
+        },
+        {
+          $lookup: {
+            from: "r_subcategories",
+            localField: "_id",
+            foreignField: "catId",
+            as: "subCategories",
+          },
+        },
+        {
+          $addFields: {
+            subCategories: {
+              $filter: {
+                input: "$subCategories",
+                cond: { $in: ["$$this.deletedAt", [null, "", undefined]] },
               },
             },
-          ],
+          },
         },
-      },
-      {
-        $lookup: {
-          from: "r_subcategories",
-          localField: "_id",
-          foreignField: "catId",
-          as: "subCategories",
-        },
-      },
-      {
-        $sort: { createdAt: -1 },
-      },
-      {
-        $skip: offset,
-      },
-      {
-        $limit: ITEMS_PER_PAGE,
-      },
-    ]);
+      ])
+      .sort({ tanggal: -1 })
+      .skip(offset)
+      .limit(ITEMS_PER_PAGE);
     return categories;
   } catch (error) {
     console.error("Database Error:", error);
@@ -126,44 +131,48 @@ export async function FetchFilteredSubCategories(
   try {
     await connect();
 
-    const subs = await m_subCategories.aggregate([
-      {
-        $match: {
-          catId: catId,
-          $and: [
-            {
-              $or: [
-                { subcatName: { $regex: new RegExp(query, "i") } },
-                { subcatDesc: { $regex: new RegExp(query, "i") } },
-              ],
-            },
-            {
-              deletedAt: {
-                $in: [null, "", undefined],
+    const subs = await m_subCategories
+      .aggregate([
+        {
+          $match: {
+            catId: catId,
+            $and: [
+              {
+                $or: [
+                  { subcatName: { $regex: new RegExp(query, "i") } },
+                  { subcatDesc: { $regex: new RegExp(query, "i") } },
+                ],
+              },
+              {
+                deletedAt: {
+                  $in: [null, "", undefined],
+                },
+              },
+            ],
+          },
+        },
+        {
+          $lookup: {
+            from: "r_subcategories2",
+            localField: "_id",
+            foreignField: "subcatId",
+            as: "subCategories2",
+          },
+        },
+        {
+          $addFields: {
+            subCategories2: {
+              $filter: {
+                input: "$subCategories2",
+                cond: { $in: ["$$this.deletedAt", [null, "", undefined]] },
               },
             },
-          ],
+          },
         },
-      },
-      {
-        $lookup: {
-          from: "r_subcategories2",
-          localField: "_id",
-          foreignField: "subcatId",
-          as: "subCategories2",
-        },
-      },
-      {
-        $sort: { createdAt: -1 },
-      },
-      {
-        $skip: offset,
-      },
-      {
-        $limit: ITEMS_PER_PAGE,
-      },
-    ]);
-
+      ])
+      .sort({ tanggal: -1 })
+      .skip(offset)
+      .limit(ITEMS_PER_PAGE);
     return subs;
   } catch (error) {
     console.error("Database Error:", error);
@@ -215,7 +224,7 @@ export async function FetchFilteredSubCategories2(
           },
         },
       ])
-      .sort({ createdAt: -1 })
+      .sort({ tanggal: -1 })
       .skip(offset)
       .limit(ITEMS_PER_PAGE);
     return subs;
@@ -289,32 +298,27 @@ export async function FetchFilteredSupplierData(
 
   try {
     await connect();
-    const supplier = await m_supplier.aggregate([
-      {
-        $match: {
-          $and: [
-            {
-              $or: [
-                { code: { $regex: new RegExp(query, "i") } },
-                { name: { $regex: new RegExp(query, "i") } },
-              ],
-            },
-            {
-              deletedAt: { $in: [null, "", undefined] },
-            },
-          ],
+    const supplier = await m_supplier
+      .aggregate([
+        {
+          $match: {
+            $and: [
+              {
+                $or: [
+                  { code: { $regex: new RegExp(query, "i") } },
+                  { name: { $regex: new RegExp(query, "i") } },
+                ],
+              },
+              {
+                deletedAt: { $in: [null, "", undefined] },
+              },
+            ],
+          },
         },
-      },
-      {
-        $sort: { createdAt: -1 },
-      },
-      {
-        $skip: offset,
-      },
-      {
-        $limit: ITEMS_PER_PAGE,
-      },
-    ]);
+      ])
+      .sort({ tanggal: -1 })
+      .skip(offset)
+      .limit(ITEMS_PER_PAGE);
     return supplier;
   } catch (error) {
     console.error("Database Error:", error);
